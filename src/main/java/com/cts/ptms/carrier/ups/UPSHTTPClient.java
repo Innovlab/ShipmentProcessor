@@ -31,7 +31,6 @@ import main.java.com.cts.ptms.core.ClientGateway;
 //import main.java.com.cts.ptms.model.AccessRequest;
 import main.java.com.cts.ptms.model.CreateShipUnits;
 import main.java.com.cts.ptms.model.ShipmentDocument;
-import main.java.com.cts.ptms.model.confirm.response.Error;
 //import main.java.com.cts.ptms.model.Error;
 //import main.java.com.cts.ptms.model.ShipmentAcceptRequest;
 //import main.java.com.cts.ptms.model.ShipmentAcceptRequestObjectFactory;
@@ -45,6 +44,7 @@ import main.java.com.cts.ptms.model.accept.request.ShipmentAcceptRequest;
 import main.java.com.cts.ptms.model.accept.response.ShipmentAcceptResponse;
 import main.java.com.cts.ptms.model.accessRequest.AccessRequest;
 import main.java.com.cts.ptms.model.confirm.request.ShipmentConfirmRequest;
+import main.java.com.cts.ptms.model.confirm.response.Error;
 import main.java.com.cts.ptms.model.confirm.response.ShipmentConfirmResponse;
 import main.java.com.cts.ptms.utils.constants.ShippingConstants;
 
@@ -110,8 +110,8 @@ public class UPSHTTPClient implements ClientGateway {
 			if(null != acceptResponse.getShipmentResults().getForm() && (null != acceptResponse.getShipmentResults().getForm().getImage().getGraphicImage())){
 				ShipmentDocument document = new ShipmentDocument();
 				document.setName("INVOICE");
-				document.setType(acceptResponse.getShipmentResults().getForm().getImage().getGraphicImage());
-				document.setContent(acceptResponse.getShipmentResults().getForm().getImage().getImageFormat().getCode());		
+				document.setType(acceptResponse.getShipmentResults().getForm().getImage().getImageFormat().getCode());
+				document.setContent(acceptResponse.getShipmentResults().getForm().getImage().getGraphicImage());		
 				response.getShipmentDocuments().add(document);
 
 			}

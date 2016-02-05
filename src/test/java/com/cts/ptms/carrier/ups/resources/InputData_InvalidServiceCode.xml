@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<CreateShipUnits>
+                <SessionID>245</SessionID>
+                <CreateShipUnitsParams>
+                                <CREATE_SHIP_UNITS_PARAMS1
+                                                xmlns="http://ScanData.com/WTM/XMLSchemas/WTM_XMLSchema_11.00.0000.xsd"
+                                                MSN="245">
+                                                <SHIP_UNIT Version="11.00.0000">
+                                                                <CartonNumber>00000070520009731471</CartonNumber>
+                                                                <DistributionCenter>7052</DistributionCenter>
+                                                                <OrderKey>157431137609</OrderKey>
+                                                                <OrderNumber>157431137609</OrderNumber>
+                                                                <BillingAccountID>7052</BillingAccountID>
+                                                                <Status>LABELED</Status>
+                                                                <CartonName>STANDARD</CartonName>
+                                                                <DatePlannedShipment>2015-07-08-05:00</DatePlannedShipment>
+                                                                <ShipVia>897</ShipVia>
+                                                                <ShippingOptions />
+                                                                <Weight>8</Weight>
+                                                                <Length>15</Length>
+                                                                <Width>10</Width>
+                                                                <Height>5</Height>
+                                                                <CarrierReferenceNote>157431137609</CarrierReferenceNote>
+                                                                <CarrierReferenceType>IK</CarrierReferenceType>
+                                                                <DataXML>
+                                                                                <SHIP_UNIT_CUSTOM
+                                                                                                xmlns="http://ScanData.com/WTM/XMLSchemas/Walmart_1.00.0000.xsd">
+                                                                                                <CustomerPONumber>157431137609</CustomerPONumber>
+                                                                                </SHIP_UNIT_CUSTOM>
+                                                                                <INVOICE xmlns="http://ScanData.com/WTM/XMLSchemas/Walmart_1.00.0000.xsd">
+                                                                                                <CustomerOrderNumber>157431137609</CustomerOrderNumber>
+                                                                                                <SalesTax>0.0000</SalesTax>
+                                                                                                <ShippingAndHandling>27.8800</ShippingAndHandling>
+                                                                                                <ShipmentTotal>91.8800</ShipmentTotal>
+                                                                                                <SubTotal>64.0000</SubTotal>
+                                                                                                <TCNumber>78130151356808848117</TCNumber>
+                                                                                                <WaveNumber>5628</WaveNumber>
+                                                                                                <ITEM>
+                                                                                                                <LineNumber>1</LineNumber>
+                                                                                                                <Quantity>4</Quantity>
+                                                                                                                <ItemNumber>928354686</ItemNumber>
+                                                                                                                <Description>2 STATION BAG STAND</Description>
+                                                                                                                <SecondaryDescription>12341001-12341003</SecondaryDescription>
+                                                                                                                <SecondaryDescription>009283546861231231231231231231
+                                                                                                                </SecondaryDescription>
+                                                                                                                <UnitPrice>16.0000</UnitPrice>
+                                                                                                                <TotalPrice>64.0000</TotalPrice>
+                                                                                                </ITEM>
+                                                                                </INVOICE>
+                                                                                <ShippingOptions />
+                                                                </DataXML>
+                                                                <ADDRESS>
+                                                                                <Class>ORDERED_BY</Class>
+                                                                                <IndividualName>Kimi Dora</IndividualName>
+                                                                                <Address1>75 West Road</Address1>
+                                                                                <Address2 />
+                                                                                <Address3 />
+                                                                                <Address4 />
+                                                                                <City>Bentonville</City>
+                                                                                <State>AR</State>
+                                                                                <ZIPCode>72712</ZIPCode>
+                                                                </ADDRESS>
+                                                                <ADDRESS>
+                                                                                <Class>DELIVER_TO</Class>
+                                                                                <AddressID>157431137609</AddressID>
+                                                                                <IndividualName>Kim Possible</IndividualName>
+                                                                                <Address1>75 West Road</Address1>
+                                                                                <City>Bentonville</City>
+                                                                                <State>AR</State>
+                                                                                <ZIPCode>72712</ZIPCode>
+                                                                                <PhoneNumber>8148341966</PhoneNumber>
+                                                                </ADDRESS>
+                                                                <ADDRESS>
+                                                                                <Class>RETURN</Class>
+                                                                                <IndividualName>WALMART.COM</IndividualName>
+                                                                                <Address1>1901 SE 10TH STREET</Address1>
+                                                                                <Address2>1901 SE 10TH STREET</Address2>
+                                                                                <City>BENTONVILLE</City>
+                                                                                <State>AR</State>
+                                                                                <ZIPCode>72716</ZIPCode>
+                                                                </ADDRESS>
+                                                                <INTERNATIONAL_SHIP_UNIT />
+                                                                <UPS_SHIP_UNIT>
+                                                                                <CustomerReferenceType2>PO</CustomerReferenceType2>
+                                                                                <CustomerReference2>157431137609</CustomerReference2>
+                                                                </UPS_SHIP_UNIT>
+                                                                <FEDEX_SHIP_UNIT>
+                                                                                <PackagePONumber>157431137609</PackagePONumber>
+                                                                </FEDEX_SHIP_UNIT>
+                                                </SHIP_UNIT>
+                                                <LabelOutputFileType>Buffer</LabelOutputFileType>
+                                                <ReportOutputFileType>None</ReportOutputFileType>
+                                </CREATE_SHIP_UNITS_PARAMS1>
+                </CreateShipUnitsParams>
+</CreateShipUnits>
