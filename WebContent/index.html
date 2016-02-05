@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html ng-app="gls">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="author" content="">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<head>
+<link rel="stylesheet" href="css/bootstrap.min.css" />
+<link rel="stylesheet" href="css/grid.css" />
+<script src="lib/angular.min.js"></script>
+</head>
+<body ng-controller="family"
+	style="overflow: hidden; background-color: #F8F8F8;">
+	<div ng-show="load"
+		style="top: 40%; left: 45%; right: 45%; position: absolute; z-index: 1070;">
+		<img src="./images/loading.gif" />
+	</div>
+	<div class="row" ng-hide="!showDta">
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<img ng-src="{{imgSrc}}" style="height: 500px" />
+		</div>
+	</div>
+	<div class="alert alert-danger" ng-show="showError">
+		  <a href="{{strUrl}}" class="close" data-dismiss="alert" aria-label="close" >&times;</a>
+		<strong>Error!</strong> {{errorDesc}}
+	</div>
+	<div ng-hide="showDta"
+		style="background-image: url('images/xml_5.png'); padding-top: 5%;">
+		<div class="row">
+			<div class="col-lg-3"></div>
+			<div class="col-lg-6">
+				<h3 align="center">Input XML to be pasted below</h3>
+				<textarea rows="4" cols="50"
+					class="form-control ng-pristine ng-untouched ng-valid"
+					ng-model="xmlData" style="width: 680px; height: 350px;"></textarea>
+				<br>
+				<div class="row">
+					<div class="col-lg-10"></div>
+					<div class="col-lg-2">
+						<button ng-click="processXML()" class="btn btn-success btn-lg"
+							style="right: 45%">Proceed</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+		var gls=angular.module('gls',[])
+		.controller('family',function($scope,$window,$http){
+			$scope.processXML=function(){
+				var bfr=$scope.xmlData.replace(/(<[a-z A-Z]:)/g,'<');
+				var frmData = new FormData();
+				$scope.strUrl = window.location.href;
+				$scope.strUrl = $scope.strUrl.replace("/#","");
+				var aftr=bfr.replace(/(<\/[a-z A-Z]:)/g,'</');
+				$scope.load = true;
+				 frmData.append('FILEUPLOAD', aftr);
+		        $http.post('./rest/ManageShipping/importXMLFile', frmData, {
+		            transformRequest: angular.identity,
+		            headers: {'Content-Type': undefined}
+				}).success(function(resp, status) {
+					$scope.response = resp
+					if(resp.status == null || resp.status == "Failure" || resp.status == "FAILURE"){
+						$scope.showDta = false;
+						$scope.load = false;
+						$scope.errorDesc = resp.errorDescription;
+						$scope.showError = true;
+					}
+					else{
+						var str = window.location.href;
+						str = str.replace("/#","");
+						$scope.imgSrc = str +"/ShipLabels/"+$scope.response.trackingNumber+".png";
+						$scope.showDta = true;
+						$scope.load = false;
+						$scope.showError = false;
+					}
+				}).error(function(error, status){
+					$scope.showDta = false;
+					$scope.load = false;
+					$scope.showError = true;
+				}); 
+			}
+			function xmlToJson(xml) {
+				
+				// Create the return object
+				var obj = {};
+
+				if (xml.nodeType == 1) { // element
+					// do attributes
+					if (xml.attributes.length > 0) {
+					obj["@attributes"] = {};
+						for (var j = 0; j < xml.attributes.length; j++) {
+							var attribute = xml.attributes.item(j);
+							obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+						}
+					}
+				} else if (xml.nodeType == 3) { // text
+					obj = xml.nodeValue;
+				}
+
+				// do children
+				if (xml.hasChildNodes()) {
+					for(var i = 0; i < xml.childNodes.length; i++) {
+						var item = xml.childNodes.item(i);
+						var nodeName = item.nodeName;
+						if (typeof(obj[nodeName]) == "undefined") {
+							obj[nodeName] = xmlToJson(item);
+						} else {
+							if (typeof(obj[nodeName].push) == "undefined") {
+								var old = obj[nodeName];
+								obj[nodeName] = [];
+								obj[nodeName].push(old);
+							}
+							obj[nodeName].push(xmlToJson(item));
+						}
+					}
+				}
+				return obj;
+			};
+
+		});
+
+		gls.directive('file', function () {
+			return {
+				scope: {
+					file: '='
+				},
+				link: function(scope, el, attrs){
+					
+					var r=new RegExp(/\.(docx|pdf)$/i);
+					el.bind('change', function(event){
+						var files = event.target.files;
+						var file = files[0];
+
+						if(r.test(file.name)){
+							scope.$parent.addScreen.fileconverter.$valid=true;
+							scope.file = file;
+							scope.$apply();
+						   
+						 }
+						 else{
+							scope.$parent.addScreen.fileconverter.$valid=false;
+							scope.$apply();
+						 }
+					});
+				}
+			};
+		});
+		
+	</script>
+</html>

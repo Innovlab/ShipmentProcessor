@@ -1,0 +1,425 @@
+.responsivetbl{
+   
+    margin: 0px auto;
+	position: relative;
+	margin-bottom:10px;
+  border: 1px solid grey;
+  max-height: 460.65625px;
+  overflow-x:hidden;
+}
+/*.mobile-view .responsivetbl{
+ background-color: #FFFFFF;
+}*/
+.mobile-view .responsivetbl.no-page {
+ padding:0;
+}
+
+.tblcontainer
+{
+ background-color: #FFFFFF;
+ /*border: 1px solid;*/
+}
+.tblcontainer .table
+{
+margin:0;
+}
+.tblcontainer .table th, .tblcontainer .table td ,.staticCol .table th, .staticCol .table td{
+padding:8px;
+border-bottom: 0 none;
+border-top: 0 none;
+}
+.tblcontainer .table th,.staticCol .table th{
+	padding-right:18px;
+}
+.table th
+{
+	background: #2C3E50 url(../images/grid-desc.png) no-repeat 95% center;
+	color:#fff;
+	font-size:13px;
+	font-weight:normal;
+	cursor:pointer;
+}
+.table > thead > tr > th{
+	vertical-align:middle;
+}
+.tblcontainer .table td, .staticCol .table td
+{
+font-size:13px;
+}
+.tblcontainer .table td.paid
+{
+color:#666;
+background-color:#d4f8ba;
+}
+.tblcontainer .table td.denied
+{
+color:#d92231;
+background-color:#f7d3d5;
+}
+.tblcontainer .table td.suspended
+{
+color:#e67600;
+background-color:#fae4cc;
+}
+
+.table th[data-asc="A"]{
+   background:#2895d5 url(../images/grid-asc.png) no-repeat 95% center;
+}
+.table th[data-sort="none"]{
+   cursor:default;
+	background-image:none;
+padding-right:10px;
+}
+
+.tfooter
+{
+    position: relative;
+}
+/* grid table overrides */
+.tblcontainer .table-bordered thead:first-child tr:first-child > th:last-child, .tblcontainer .table-bordered tbody:first-child tr:first-child > td:last-child, .tblcontainer .table-bordered tbody:first-child tr:first-child > th:last-child {
+    border-top-right-radius: 0;
+}
+.tblcontainer .table-bordered thead:first-child tr:first-child > th:first-child, .tblcontainer .table-bordered tbody:first-child tr:first-child > td:first-child, .tblcontainer .table-bordered tbody:first-child tr:first-child > th:first-child {
+    border-top-left-radius: 0;
+}
+.tblcontainer .table-bordered thead:last-child tr:last-child > th:last-child, .tblcontainer .table-bordered tbody:last-child tr:last-child > td:last-child, .tblcontainer .table-bordered tbody:last-child tr:last-child > th:last-child, .tblcontainer .table-bordered tfoot:last-child tr:last-child > td:last-child, .tblcontainer .table-bordered tfoot:last-child tr:last-child > th:last-child {
+    border-bottom-right-radius: 0;
+}
+.tblcontainer .table-bordered thead:last-child tr:last-child > th:first-child, .tblcontainer .table-bordered tbody:last-child tr:last-child > td:first-child, .tblcontainer .table-bordered tbody:last-child tr:last-child > th:first-child, .tblcontainer .table-bordered tfoot:last-child tr:last-child > td:first-child, .tblcontainer .table-bordered tfoot:last-child tr:last-child > th:first-child {
+    border-bottom-left-radius: 0;
+}
+
+/*.table-striped > tbody > tr:nth-child(2n+1):hover > td,.tblcontainer tr:hover > td {
+    background-color: #ff0000;
+}*/
+
+
+/* Static */
+.staticCol .table-bordered thead:first-child tr:first-child > th:last-child, .staticCol .table-bordered tbody:first-child tr:first-child > td:last-child, .staticCol .table-bordered tbody:first-child tr:first-child > th:last-child {
+    border-top-right-radius: 0;
+}
+.staticCol .table-bordered thead:first-child tr:first-child > th:first-child, .staticCol .table-bordered tbody:first-child tr:first-child > td:first-child, .staticCol .table-bordered tbody:first-child tr:first-child > th:first-child {
+    border-top-left-radius: 0;
+}
+.staticCol .table-bordered thead:last-child tr:last-child > th:last-child, .staticCol .table-bordered tbody:last-child tr:last-child > td:last-child, .staticCol .table-bordered tbody:last-child tr:last-child > th:last-child, .staticCol .table-bordered tfoot:last-child tr:last-child > td:last-child, .staticCol .table-bordered tfoot:last-child tr:last-child > th:last-child {
+    border-bottom-right-radius: 0;
+}
+.staticCol .table-bordered thead:last-child tr:last-child > th:first-child, .staticCol .table-bordered tbody:last-child tr:last-child > td:first-child, .staticCol .table-bordered tbody:last-child tr:last-child > th:first-child, .staticCol .table-bordered tfoot:last-child tr:last-child > td:first-child, .staticCol .table-bordered tfoot:last-child tr:last-child > th:first-child {
+    border-bottom-left-radius: 0;
+}
+.tblcontainer table,.staticCol table
+{
+border-radius:0;
+-webkit-border-radius:0;
+border:none;
+margin:0;
+}
+.pagination
+{
+margin:0;
+}
+
+.selectWrap
+{
+padding-bottom:0.9375em;
+}
+.selectWrap small {
+    color: #666666;
+    font-size: 0.8125em;
+    margin-left: 5px;
+	display:none;
+}
+.selectWrap .selectPgsize{
+display:none;
+}
+.tfooter
+{
+/* padding:0.8333em 0 0; */
+/* padding-bottom: 25px */
+}
+
+.selectPgsize .btn
+{
+border:1px solid #b5b5b5;
+border-radius:3px;
+-webkit-border-radius:3px;
+padding:0;
+}
+.selectPgsize .btn > span.glyphicon,.bootstrap-select .btn > span.glyphicon
+{
+padding:9px;
+border-left:1px solid #ddd;
+top: 0;
+margin-left: -5px;
+color:#666666;
+font-weight:100;
+background: #e7e7e7; /* Old browsers */
+background: -moz-linear-gradient(top, #ffffff 0%, #e7e7e7 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#e7e7e7)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top, #ffffff 0%,#e7e7e7 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #ffffff 0%,#e7e7e7 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top, #ffffff 0%,#e7e7e7 100%); /* IE10+ */
+background: linear-gradient(to bottom, #ffffff 0%,#e7e7e7 100%); /* W3C */
+-webkit-border-radius: 0 3px 3px 0;
+border-radius: 0 3px 3px 0;
+}
+.selectPgsize .btn > span[data-bind='label']
+{
+padding:9px 7px;
+width: 35px;
+display: block;
+float:left;
+line-height:1;
+}
+.tfooter  .pagination > .active > a
+{
+background-color:#d9dadc;
+color:#000;
+border:1px solid #b5b5b5;
+}
+.tfooter .pagination > li > a
+{
+border:1px solid #b5b5b5;
+font-size:0.8125em;
+}
+.staticCol
+{
+position:absolute;
+top: 0;
+display:block;
+ background-color: #FFFFFF;
+}
+.no-page .staticCol
+{
+top: 0px;
+}
+.tblcontainer .table tbody td,.tblcontainer .table thead th
+{
+ white-space: nowrap;
+}
+/*no complex headers*/
+.noComplexHeader .tblcontainer  .table tbody td:first-child,.noComplexHeader .tblcontainer .table thead th:first-child {
+	display:none;
+}
+.noComplexHeader.hidetwocols .tblcontainer  .table tbody td:nth-child(2),.noComplexHeader.hidetwocols .tblcontainer .table thead th:nth-child(2) {  
+  display: none;
+}
+
+/*hide one column in complex headers*/
+.hideonecomplexcols .tblcontainer  .table tbody td:first-child,
+.hideonecomplexcols .tblcontainer .table thead tr:first-child th:first-child {
+    display:none;
+}
+
+/*hide two column in complex headers where two are normal columns*/
+.hidetwocomplexcols1 .tblcontainer  .table tbody td:first-child,
+.hidetwocomplexcols1 .tblcontainer .table thead tr:first-child th:first-child,
+.hidetwocomplexcols1 .tblcontainer  .table tbody td:nth-child(2),
+.hidetwocomplexcols1 .tblcontainer .table thead tr:first-child th:nth-child(2)
+{
+    display:none;
+}
+
+/*hide two column in complex headers where two have super header*/
+.hidetwocomplexcols2 .tblcontainer  .table tbody td:first-child,
+.hidetwocomplexcols2 .tblcontainer .table thead tr:first-child th:first-child,
+.hidetwocomplexcols2 .tblcontainer  .table tbody td:nth-child(2),
+.hidetwocomplexcols2 .tblcontainer .table thead tr:nth-child(2) th:first-child,
+.hidetwocomplexcols2 .tblcontainer .table thead tr:nth-child(2) th:nth-child(2)
+{
+    display:none;
+}
+
+
+/*no static columns*/
+.noStatic .tblcontainer  .table tbody td:first-child,.noStatic .tblcontainer .table thead th:first-child,.noStatic .tblcontainer  .table tbody td:nth-child(2),.noStatic .tblcontainer .table thead th:nth-child(2) {  
+  display: table-cell;
+}
+
+
+.mobile-view .tblcontainer {
+    overflow-x: auto;
+    overflow-y: hidden;
+   -webkit-overflow-scrolling: touch;
+   -webkit-transform: translate3d(0,0,0);
+}
+.grid-icons i
+{
+margin:0 5px;
+cursor:pointer;
+}
+.deleteRow ,.editRow {
+cursor:pointer;
+}
+
+.tblcontainer .table td.high,.tblcontainer .table td.denied {
+    background-color: #F7D3D5;
+    color: #D92231;
+}
+.tblcontainer tr,.staticCol tr {
+   border:1px solid #e2e2e2;
+}
+.tblcontainer .table td.medium,.tblcontainer .table td.suspended {
+    background-color: #FAE4CC;
+    color: #E67600;
+}
+.tblcontainer .table td.low,.tblcontainer .table td.paid {
+    background-color: #D4F8BA;
+    color: #666666;
+}
+.table-striped > tbody > tr:nth-child(2n+1) > td.sorted {
+    background-color: #d4eaf7;
+}
+
+.add-field-container label
+{
+display:block;
+}
+.noRecords{
+background-color:#fff;
+padding:5px;
+margin-bottom: 15px;
+}
+.noRecords p{
+text-align:center;
+margin:0;
+color: chocolate;
+}
+.table th[align="center"] {
+    text-align: center;
+}
+.pagination > .disabled > a:hover, .pagination > .disabled > a:focus{
+border-color:#b5b5b5;
+}
+.pagination > li {
+    display: inline-block;
+	margin-left:2px;
+}
+
+.pagination > li > span:hover,.pagination > li > span:focus {
+    background-color:transparent;
+    border-color: transparent;
+    color: #676767;
+}
+.pagination > li > a{
+
+    padding: 7px 10px;
+    cursor: pointer;
+
+}
+.pagination li > input {
+	width:34px;
+	height: 34px;
+	float: left;
+	background: #fff;
+	font-size: 13px;
+	padding:0;
+	text-align:center;
+	color:#2b95d3;
+  cursor: pointer;
+}
+.pagination li > span {
+	background: none;
+	color: #676767;
+	font-size: 13px;
+	margin-left:0px;
+	    padding: 7px 9px;
+		border:0;
+    cursor: pointer;
+}
+.pagination .pginput
+{
+-webkit-border-radius: 0;
+border-radius: 0;
+}
+/* Pagination Images */
+.glyphicon-first{
+	background:url('../images/first.png') no-repeat;
+	width:14px;
+	height:14px;
+	vertical-align:text-top;
+}
+.glyphicon-last{
+	background:url('../images/last.png') no-repeat;
+	width:14px;
+	height:14px;
+	vertical-align:text-top;
+}
+.glyphicon-next{
+
+	background:url('../images/next.png') no-repeat;
+	width:10px;
+	height:14px;
+	vertical-align:text-top;
+}
+.glyphicon-prev{
+
+	background:url('../images/prev.png') no-repeat;
+	width:10px;
+	height:14px;
+	vertical-align:text-top;
+}
+.disabled .glyphicon-prev{
+background:url('../images/prev-inactive.png') no-repeat;
+}
+.disabled .glyphicon-next{
+background:url('../images/next-inactive.png') no-repeat;
+}
+.disabled .glyphicon-first{
+background:url('../images/first-inactive.png') no-repeat;
+}
+.disabled .glyphicon-last{
+background:url('../images/last-inactive.png') no-repeat;
+}
+
+@media (min-width: 992px) {
+
+.staticCol
+{
+display:none;
+}
+.noComplexHeader .tblcontainer  .table tbody td:first-child,.noComplexHeader .tblcontainer .table thead th:first-child {
+	display: table-cell;
+}
+.noComplexHeader.hidetwocols .tblcontainer  .table tbody td:nth-child(2),.noComplexHeader.hidetwocols .tblcontainer .table thead th:nth-child(2) {  
+  display: table-cell;
+}
+
+/*hide one column in complex headers*/
+.hideonecomplexcols .tblcontainer  .table tbody td:first-child,
+.hideonecomplexcols .tblcontainer .table thead tr:first-child th:first-child {
+    display: table-cell;
+}
+
+/*hide two column in complex headers where two are normal columns*/
+.hidetwocomplexcols1 .tblcontainer  .table tbody td:first-child,
+.hidetwocomplexcols1 .tblcontainer .table thead tr:first-child th:first-child,
+.hidetwocomplexcols1 .tblcontainer  .table tbody td:nth-child(2),
+.hidetwocomplexcols1 .tblcontainer .table thead tr:first-child th:nth-child(2)
+{
+    display: table-cell;
+}
+
+/*hide two column in complex headers where two have super header*/
+.hidetwocomplexcols2 .tblcontainer  .table tbody td:first-child,
+.hidetwocomplexcols2 .tblcontainer .table thead tr:first-child th:first-child,
+.hidetwocomplexcols2 .tblcontainer  .table tbody td:nth-child(2),
+.hidetwocomplexcols2 .tblcontainer .table thead tr:nth-child(2) th:first-child,
+.hidetwocomplexcols2 .tblcontainer .table thead tr:nth-child(2) th:nth-child(2)
+{
+    display: table-cell;
+}
+
+.tblcontainer .table tbody td,.tblcontainer .table thead th
+{
+white-space: normal; 
+}
+
+
+}
+@media (max-width:979px){
+
+.pagination {
+      padding-bottom: 10px;
+  }
+}
