@@ -1,14 +1,6 @@
 package main.java.com.cts.ptms.carrier.ups;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Locale;
-
-import main.java.com.cts.ptms.model.confirm.request.DiscountType;
-import main.java.com.cts.ptms.model.confirm.request.FreightChargesType;
-import main.java.com.cts.ptms.model.confirm.request.InsuranceChargesType;
-import main.java.com.cts.ptms.model.confirm.request.OtherChargesType;
 
 import main.java.com.cts.ptms.model.ADDRESS;
 import main.java.com.cts.ptms.model.CreateShipUnits;
@@ -20,7 +12,11 @@ import main.java.com.cts.ptms.model.ShipmentAcceptRequestObjectFactory;
 //import main.java.com.cts.ptms.model.ShipmentConfirmRequest.Request.TransactionReference;
 import main.java.com.cts.ptms.model.ShipmentConfirmResponse;
 import main.java.com.cts.ptms.model.confirm.request.CodeType;
+import main.java.com.cts.ptms.model.confirm.request.DiscountType;
+import main.java.com.cts.ptms.model.confirm.request.FreightChargesType;
+import main.java.com.cts.ptms.model.confirm.request.InsuranceChargesType;
 import main.java.com.cts.ptms.model.confirm.request.InternationalFormsType;
+import main.java.com.cts.ptms.model.confirm.request.OtherChargesType;
 import main.java.com.cts.ptms.model.confirm.request.PackageType;
 import main.java.com.cts.ptms.model.confirm.request.PackageWeightType;
 import main.java.com.cts.ptms.model.confirm.request.PackagingTypeType;
@@ -187,37 +183,39 @@ public class UPSMapper {
 	
 		
 		//International Forms
+		INVOICE invoice = shipUnit.getDataXML().getINVOICE();
+		
 		InternationalFormsType internationalForms = shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms();
 		List<String> formTypeList = internationalForms.getFormType();
 
 		//Commercial Invoice
 		formTypeList.add("01");
-
+		
 		// Add Product 
 		List<ProductType> productList = internationalForms.getProduct();
 		ProductType product = new ProductType();
 		List<String> descriptionList = product.getDescription();
-		descriptionList.add("Product 1");
-		product.setCommodityCode("123COM");
+		descriptionList.add(invoice.getITEM().getDescription());
+		product.setCommodityCode(invoice.getITEM().getItemNumber().toString());
 		product.setOriginCountryCode("US");
 		UnitType unit = new UnitType();
-		unit.setNumber("147");
-		unit.setValue("478");
+		unit.setNumber(invoice.getITEM().getQuantity().toString());
+		unit.setValue(invoice.getITEM().getUnitPrice().toString());
 		CodeType uom = new CodeType();
 		uom.setCode("BOX");
-		uom.setDescription("BOX");
+		uom.setDescription("");
 		unit.setUnitOfMeasurement(uom);
 		product.setUnit(unit);
 		ProductWeightType productWeight = new ProductWeightType();
-		productWeight.setWeight("10");
+		productWeight.setWeight(shipUnit.getWeight().toString());
 		CodeType uomForWeight = new CodeType();
 		uomForWeight.setCode("LBS");
-		uomForWeight.setDescription("LBS");
+		uomForWeight.setDescription("Pounds");
 		productWeight.setUnitOfMeasurement(uomForWeight);
 		product.setProductWeight(productWeight);
 		productList.add(product);
 		
-		INVOICE invoice = shipUnit.getDataXML().getINVOICE();
+		//INVOICE invoice = shipUnit.getDataXML().getINVOICE();
 		//LocalDateTime.parse(shipUnit.getDatePlannedShipment(), DateTimeFormatter.ofPattern("yyyyMMdd").withLocale(Locale.ENGLISH));
 		internationalForms.setInvoiceNumber(invoice.getCustomerOrderNumber().toString());
 		//internationalForms.setInvoiceDate(LocalDateTime.parse(shipUnit.getDatePlannedShipment(), DateTimeFormatter.ofPattern("yyyyMMdd").withLocale(Locale.ENGLISH)).toString());

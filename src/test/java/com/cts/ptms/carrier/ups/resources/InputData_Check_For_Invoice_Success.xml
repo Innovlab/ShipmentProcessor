@@ -25,14 +25,14 @@
                                                                 <DataXML>
                                                                                 <SHIP_UNIT_CUSTOM
                                                                                                 xmlns="http://ScanData.com/WTM/XMLSchemas/Walmart_1.00.0000.xsd">
-                                                                                                <CustomerPONumber>157431137609</CustomerPONumber>
+                                                                                                <CustomerPONumber>157431137870</CustomerPONumber>
                                                                                 </SHIP_UNIT_CUSTOM>
                                                                                 <INVOICE xmlns="http://ScanData.com/WTM/XMLSchemas/Walmart_1.00.0000.xsd">
-                                                                                                <CustomerOrderNumber>157431137609</CustomerOrderNumber>
+                                                                                                <CustomerOrderNumber>1574311376870</CustomerOrderNumber>
                                                                                                 <SalesTax>0.0000</SalesTax>
-                                                                                                <ShippingAndHandling>27.8800</ShippingAndHandling>
-                                                                                                <ShipmentTotal>91.8800</ShipmentTotal>
-                                                                                                <SubTotal>64.0000</SubTotal>
+                                                                                                <ShippingAndHandling>30.0000</ShippingAndHandling>
+                                                                                                <ShipmentTotal>500.8800</ShipmentTotal>
+                                                                                                <SubTotal>530.8800</SubTotal>
                                                                                                 <TCNumber>78130151356808848117</TCNumber>
                                                                                                 <WaveNumber>5628</WaveNumber>
                                                                                                 <ITEM>
@@ -43,8 +43,8 @@
                                                                                                                 <SecondaryDescription>12341001-12341003</SecondaryDescription>
                                                                                                                 <SecondaryDescription>009283546861231231231231231231
                                                                                                                 </SecondaryDescription>
-                                                                                                                <UnitPrice>16.0000</UnitPrice>
-                                                                                                                <TotalPrice>64.0000</TotalPrice>
+                                                                                                                <UnitPrice>500.0000</UnitPrice>
+                                                                                                                <TotalPrice>500.0000</TotalPrice>
                                                                                                 </ITEM>
                                                                                 </INVOICE>
                                                                                 <ShippingOptions />
@@ -64,7 +64,7 @@
                                                                                 <Class>DELIVER_TO</Class>
                                                                                 <AddressID>157431137609</AddressID>
                                                                                 <IndividualName>Venkata Kakani</IndividualName>
-                                                                                <Address1>75 West Road</Address1>
+                                                                                <Address1>1234 SW Road</Address1>
                                                                                 <City>Bentonville</City>
                                                                                 <State>AR</State>
                                                                                 <ZIPCode>72712</ZIPCode>
@@ -79,7 +79,9 @@
                                                                                 <State>AR</State>
                                                                                 <ZIPCode>72716</ZIPCode>
                                                                 </ADDRESS>
-                                                                <INTERNATIONAL_SHIP_UNIT />
+                                                                <INTERNATIONAL_SHIP_UNIT>
+                                                                	<INVOICE>Y</INVOICE>                                                                	
+                                                                </INTERNATIONAL_SHIP_UNIT>
                                                                 <UPS_SHIP_UNIT>
                                                                                 <CustomerReferenceType2>PO</CustomerReferenceType2>
                                                                                 <CustomerReference2>157431137609</CustomerReference2>

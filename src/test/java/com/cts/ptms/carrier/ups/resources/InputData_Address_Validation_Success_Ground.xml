@@ -16,7 +16,7 @@
                                                                 <DatePlannedShipment>2015-07-08-05:00</DatePlannedShipment>
                                                                 <ShipVia>03</ShipVia>
                                                                 <ShippingOptions />
-                                                                <Weight>8</Weight>
+                                                                <Weight>20</Weight>
                                                                 <Length>15</Length>
                                                                 <Width>10</Width>
                                                                 <Height>5</Height>
@@ -25,34 +25,34 @@
                                                                 <DataXML>
                                                                                 <SHIP_UNIT_CUSTOM
                                                                                                 xmlns="http://ScanData.com/WTM/XMLSchemas/Walmart_1.00.0000.xsd">
-                                                                                                <CustomerPONumber>157431137609</CustomerPONumber>
+                                                                                                <CustomerPONumber>157431157897</CustomerPONumber>
                                                                                 </SHIP_UNIT_CUSTOM>
                                                                                 <INVOICE xmlns="http://ScanData.com/WTM/XMLSchemas/Walmart_1.00.0000.xsd">
-                                                                                                <CustomerOrderNumber>157431137609</CustomerOrderNumber>
+                                                                                                <CustomerOrderNumber>157431157897</CustomerOrderNumber>
                                                                                                 <SalesTax>0.0000</SalesTax>
-                                                                                                <ShippingAndHandling>27.8800</ShippingAndHandling>
-                                                                                                <ShipmentTotal>91.8800</ShipmentTotal>
-                                                                                                <SubTotal>64.0000</SubTotal>
-                                                                                                <TCNumber>78130151356808848117</TCNumber>
+                                                                                                <ShippingAndHandling>30.00</ShippingAndHandling>
+                                                                                                <ShipmentTotal>100.8800</ShipmentTotal>
+                                                                                                <SubTotal>138.88</SubTotal>
+                                                                                                <TCNumber>78130151356808848187</TCNumber>
                                                                                                 <WaveNumber>5628</WaveNumber>
                                                                                                 <ITEM>
                                                                                                                 <LineNumber>1</LineNumber>
-                                                                                                                <Quantity>1</Quantity>
+                                                                                                                <Quantity>5</Quantity>
                                                                                                                 <ItemNumber>928354686</ItemNumber>
-                                                                                                                <Description>Laptop</Description>
+                                                                                                                <Description>Iphone Cases</Description>
                                                                                                                 <SecondaryDescription>12341001-12341003</SecondaryDescription>
                                                                                                                 <SecondaryDescription>009283546861231231231231231231
                                                                                                                 </SecondaryDescription>
-                                                                                                                <UnitPrice>16.0000</UnitPrice>
-                                                                                                                <TotalPrice>64.0000</TotalPrice>
+                                                                                                                <UnitPrice>15.0000</UnitPrice>
+                                                                                                                <TotalPrice>75.0000</TotalPrice>
                                                                                                 </ITEM>
                                                                                 </INVOICE>
                                                                                 <ShippingOptions />
                                                                 </DataXML>
                                                                 <ADDRESS>
                                                                                 <Class>ORDERED_BY</Class>
-                                                                                <IndividualName>Kimi Dora</IndividualName>
-                                                                                <Address1>75 West Road</Address1>
+                                                                                <IndividualName>Raghav</IndividualName>
+                                                                                <Address1>7866 ABC Street</Address1>
                                                                                 <Address2 />
                                                                                 <Address3 />
                                                                                 <Address4 />
@@ -64,7 +64,7 @@
                                                                                 <Class>DELIVER_TO</Class>
                                                                                 <AddressID>157431137609</AddressID>
                                                                                 <IndividualName>Venkata Kakani</IndividualName>
-                                                                                <Address1>75 West Road</Address1>
+                                                                                <Address1>1234 SW Road</Address1>
                                                                                 <City>Bentonville</City>
                                                                                 <State>AR</State>
                                                                                 <ZIPCode>72712</ZIPCode>

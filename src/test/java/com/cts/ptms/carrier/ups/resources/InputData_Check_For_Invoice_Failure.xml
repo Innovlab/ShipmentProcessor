@@ -79,7 +79,9 @@
                                                                                 <State>AR</State>
                                                                                 <ZIPCode>72716</ZIPCode>
                                                                 </ADDRESS>
-                                                                <INTERNATIONAL_SHIP_UNIT />
+                                                                <INTERNATIONAL_SHIP_UNIT>
+                                                                	<INVOICE>N</INVOICE>                                                                	
+                                                                </INTERNATIONAL_SHIP_UNIT>
                                                                 <UPS_SHIP_UNIT>
                                                                                 <CustomerReferenceType2>PO</CustomerReferenceType2>
                                                                                 <CustomerReference2>157431137609</CustomerReference2>

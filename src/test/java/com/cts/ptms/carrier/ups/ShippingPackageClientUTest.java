@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.Base64;
+import java.util.List;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -63,7 +64,7 @@ public class ShippingPackageClientUTest {
 			InputStream inputStream = getClass().getClassLoader().getResourceAsStream("./test/java/com/cts/ptms/carrier/ups/resources/documents_location.properties");
 			properties = new Properties();
 			properties.load(inputStream);
-			System.out.println("Saving the file .."+ properties.getProperty("SAVE_FILE_PATH"));
+			System.out.println("File will be saved on  .."+ properties.getProperty("SAVE_FILE_PATH"));
 
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -115,7 +116,7 @@ public class ShippingPackageClientUTest {
 	@Test
 	public void testCreateShipmentRequest_validServiceCode()
 	{
-		logger.info("Testing CreateShipmentRequest for Invalid ServiceCode...");
+		logger.info("Testing CreateShipmentRequest for Valid ServiceCode...");
 		try 
 		{
 			filePath = "./test/java/com/cts/ptms/carrier/ups/resources/InputData_ValidServiceCode.xml";
@@ -134,6 +135,20 @@ public class ShippingPackageClientUTest {
 			assertFalse(null == shipmentDoc.getContent());
 			byte[] decoded = Base64.getDecoder().decode(shipmentDoc.getContent());
 			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber()+"_ValidSrvcCd", false);
+			/*List<ShipmentDocument> shipDocs = shipmentResponse.getShipmentDocuments();
+			//Check for invoice
+			if(shipDocs.size() != 0 && shipDocs.get(1) != null)
+			{
+				ShipmentDocument shipmentDocInv = shipmentResponse.getShipmentDocuments().get(1);
+				assertFalse(shipmentDocInv.getName() != "INVOICE");
+				
+				assertFalse(null == shipmentDocInv.getContent());
+				byte[] decoded1 = Base64.getDecoder().decode(shipmentDocInv.getContent());
+				
+				saveBase64DataToLocalFile(decoded1, shipmentResponse.getTrackingNumber()+"_ValidSrvcCd_Invoice", true);
+				//System.out.println("Saved successfully on "+getClass().getClassLoader().getResource("").getPath());
+				assertEquals("Success", shipmentResponse.getStatus());
+			}*/
 			
 			assertEquals("Success", shipmentResponse.getStatus());
 		} 
@@ -186,6 +201,8 @@ public class ShippingPackageClientUTest {
 			URL url = getClass().getClassLoader().getResource(filePath);
 			shipmentRequest.setFileName(url.getFile());
 			shipmentResponse = upsHTTPClient.createShipmentRequest(shipmentRequest);
+			System.out.println("Status of shipmentResponse_Valid Weight:"+shipmentResponse.getStatus());
+			assertFalse(shipmentResponse.getStatus() == "Failure");
 			assertEquals("Success", shipmentResponse.getStatus());
 			System.out.println("Status:"+shipmentResponse.getStatus() );
 			
@@ -195,8 +212,23 @@ public class ShippingPackageClientUTest {
 			assertFalse(shipmentDoc.getName() != "SHIPPINGLABEL");
 			assertFalse(null == shipmentDoc.getContent());
 			byte[] decoded = Base64.getDecoder().decode(shipmentDoc.getContent());
-			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber()+"_ValidWieght", false);
+			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber()+"_ValidWeight", false);
 			assertEquals("Success", shipmentResponse.getStatus());
+			
+			/*List<ShipmentDocument> shipDocs = shipmentResponse.getShipmentDocuments();
+			//Check for invoice
+			if(shipDocs.size() != 0 && shipDocs.get(1) != null)
+			{
+				ShipmentDocument shipmentDocInv = shipmentResponse.getShipmentDocuments().get(1);
+				assertFalse(shipmentDocInv.getName() != "INVOICE");
+				
+				assertFalse(null == shipmentDocInv.getContent());
+				byte[] decoded1 = Base64.getDecoder().decode(shipmentDocInv.getContent());
+				
+				saveBase64DataToLocalFile(decoded1, shipmentResponse.getTrackingNumber()+"_ValidWeight_Invoice", true);
+				//System.out.println("Saved successfully on "+getClass().getClassLoader().getResource("").getPath());
+				assertEquals("Success", shipmentResponse.getStatus());
+			}*/
 			
 		} 
 		catch(Exception e)
@@ -270,11 +302,8 @@ public class ShippingPackageClientUTest {
 		}
 		
 	}
-	
-	
 	/**
 	 * ORDER BY Address Validation Success for 2ndDayAir
-	 * @param shippingInfoDO
 	 */
 	@Test
 	public void testCreateShipmentRequest_Address_Validate_Success_2ndDayAir()
@@ -290,6 +319,8 @@ public class ShippingPackageClientUTest {
 			shipmentRequest.setFileName(url.getFile());
 			shipmentResponse = null;
 			shipmentResponse = upsHTTPClient.createShipmentRequest(shipmentRequest);
+			
+			System.out.println("shipmentResponse-->"+shipmentResponse.getErrorDescription());
 			
 			assertFalse(shipmentResponse == null);
 			assertFalse(shipmentResponse.getShipmentDocuments().size() == 0);
@@ -310,8 +341,7 @@ public class ShippingPackageClientUTest {
 		
 	}
 	/**
-	 * 
-	 * @param shippingInfoDO
+	 *  Address Validation Failure for 2ndDayAir
 	 */
 	@Test
 	public void testCreateShipmentRequest_Address_Validate_Failure_2ndDayAir()
@@ -339,7 +369,7 @@ public class ShippingPackageClientUTest {
 	
 	/**
 	 * Check for additional documents if shipment is international shipment
-	 */
+	*/ 
 	@Test
 	public void testCreateShipmentRequest_Check_For_InvoiceDocuments()
 	{
@@ -351,7 +381,7 @@ public class ShippingPackageClientUTest {
 			URL url = getClass().getClassLoader().getResource(filePath);
 			shipmentRequest.setFileName(url.getFile());
 			shipmentResponse = upsHTTPClient.createShipmentRequest(shipmentRequest);
-			
+			System.out.println("shipmentResponse-->"+shipmentResponse.getErrorDescription());
 			assertFalse(shipmentResponse == null);
 			assertFalse(shipmentResponse.getShipmentDocuments().size() == 0);
 			
