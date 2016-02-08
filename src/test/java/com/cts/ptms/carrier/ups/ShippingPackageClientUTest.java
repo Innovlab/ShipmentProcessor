@@ -133,7 +133,7 @@ public class ShippingPackageClientUTest {
 			assertFalse(shipmentDoc.getName() != "SHIPPINGLABEL");
 			assertFalse(null == shipmentDoc.getContent());
 			byte[] decoded = Base64.getDecoder().decode(shipmentDoc.getContent());
-			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber(), false);
+			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber()+"_ValidSrvcCd", false);
 			
 			assertEquals("Success", shipmentResponse.getStatus());
 		} 
@@ -173,6 +173,41 @@ public class ShippingPackageClientUTest {
 		
 	}
 	/**
+	 * Test case for valid weight
+	 */
+	@Test
+	public void testCreateShipmentRequest_ValidWeight()
+	{
+		logger.info("Testing CreateShipmentRequest for Valid Weight...");
+		try 
+		{
+			filePath = "./test/java/com/cts/ptms/carrier/ups/resources/InputData_ValidWeight.xml";
+			shipmentRequest.setCarrier("UPS"); 
+			URL url = getClass().getClassLoader().getResource(filePath);
+			shipmentRequest.setFileName(url.getFile());
+			shipmentResponse = upsHTTPClient.createShipmentRequest(shipmentRequest);
+			assertEquals("Success", shipmentResponse.getStatus());
+			System.out.println("Status:"+shipmentResponse.getStatus() );
+			
+			assertFalse(shipmentResponse == null);
+			assertFalse(shipmentResponse.getShipmentDocuments().size() == 0);
+			ShipmentDocument shipmentDoc = shipmentResponse.getShipmentDocuments().get(0);
+			assertFalse(shipmentDoc.getName() != "SHIPPINGLABEL");
+			assertFalse(null == shipmentDoc.getContent());
+			byte[] decoded = Base64.getDecoder().decode(shipmentDoc.getContent());
+			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber()+"_ValidWieght", false);
+			assertEquals("Success", shipmentResponse.getStatus());
+			
+		} 
+		catch(Exception e)
+		{
+			assertEquals("Failure", "Failure");
+			e.printStackTrace();
+			System.out.println("Exception occured"+e.getMessage());
+		}
+		
+	}
+	/**
 	 * Address_Validate_Success_Ground
 	 * @param shippingInfoDO
 	 */
@@ -196,7 +231,7 @@ public class ShippingPackageClientUTest {
 			assertFalse(null == shipmentDoc.getContent());
 			byte[] decoded = Base64.getDecoder().decode(shipmentDoc.getContent());
 			
-			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber(), false);
+			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber()+"AddressValid_Ground", false);
 			System.out.println("Saved successfully on "+getClass().getClassLoader().getResource("").getPath());
 			assertEquals("Success", shipmentResponse.getStatus());
 		} 
@@ -263,7 +298,7 @@ public class ShippingPackageClientUTest {
 			assertFalse(null == shipmentDoc.getContent());
 			byte[] decoded = Base64.getDecoder().decode(shipmentDoc.getContent());
 			
-			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber(), false);
+			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber()+"_AddVal_2ndDayAir", false);
 			System.out.println("Saved successfully on "+getClass().getClassLoader().getResource("").getPath());
 			assertEquals("Success", shipmentResponse.getStatus());
 		} 
@@ -327,7 +362,7 @@ public class ShippingPackageClientUTest {
 			assertFalse(null == shipmentDoc.getContent());
 			byte[] decoded = Base64.getDecoder().decode(shipmentDoc.getContent());
 			
-			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber(), true);
+			saveBase64DataToLocalFile(decoded, shipmentResponse.getTrackingNumber()+"_Invoice", true);
 			//System.out.println("Saved successfully on "+getClass().getClassLoader().getResource("").getPath());
 			assertEquals("Success", shipmentResponse.getStatus());
 			
