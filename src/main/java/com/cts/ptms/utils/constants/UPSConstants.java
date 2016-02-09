@@ -19,5 +19,6 @@ public class UPSConstants {
     public static final String INPUTFILE="D:\\inputData.xml";
     public static final String UPS = "UPS";
     public static final String buildPropertiesPath=".\\main\\resources\\Config\\ups\\Integraiton\\UPS.properties";
+    public static final String CD_INVOICE = "01";
 }
 

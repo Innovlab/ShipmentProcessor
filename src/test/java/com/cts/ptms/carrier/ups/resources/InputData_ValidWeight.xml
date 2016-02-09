@@ -14,9 +14,9 @@
                                                                 <Status>LABELED</Status>
                                                                 <CartonName>STANDARD</CartonName>
                                                                 <DatePlannedShipment>2015-07-08-05:00</DatePlannedShipment>
-                                                                <ShipVia>897</ShipVia>
+                                                                <ShipVia>02</ShipVia>
                                                                 <ShippingOptions />
-                                                                <Weight>8</Weight>
+                                                                <Weight>15</Weight>
                                                                 <Length>15</Length>
                                                                 <Width>10</Width>
                                                                 <Height>5</Height>
@@ -25,26 +25,26 @@
                                                                 <DataXML>
                                                                                 <SHIP_UNIT_CUSTOM
                                                                                                 xmlns="http://ScanData.com/WTM/XMLSchemas/Walmart_1.00.0000.xsd">
-                                                                                                <CustomerPONumber>157431137609</CustomerPONumber>
+                                                                                                <CustomerPONumber>157431137809</CustomerPONumber>
                                                                                 </SHIP_UNIT_CUSTOM>
                                                                                 <INVOICE xmlns="http://ScanData.com/WTM/XMLSchemas/Walmart_1.00.0000.xsd">
-                                                                                                <CustomerOrderNumber>157431137609</CustomerOrderNumber>
+                                                                                                <CustomerOrderNumber>157431137809</CustomerOrderNumber>
                                                                                                 <SalesTax>0.0000</SalesTax>
-                                                                                                <ShippingAndHandling>27.8800</ShippingAndHandling>
-                                                                                                <ShipmentTotal>91.8800</ShipmentTotal>
-                                                                                                <SubTotal>64.0000</SubTotal>
+                                                                                                <ShippingAndHandling>100.8800</ShippingAndHandling>
+                                                                                                <ShipmentTotal>500.00</ShipmentTotal>
+                                                                                                <SubTotal>600.88</SubTotal>
                                                                                                 <TCNumber>78130151356808848117</TCNumber>
                                                                                                 <WaveNumber>5628</WaveNumber>
                                                                                                 <ITEM>
                                                                                                                 <LineNumber>1</LineNumber>
-                                                                                                                <Quantity>4</Quantity>
+                                                                                                                <Quantity>5</Quantity>
                                                                                                                 <ItemNumber>928354686</ItemNumber>
-                                                                                                                <Description>2 STATION BAG STAND</Description>
+                                                                                                                <Description>Routers</Description>
                                                                                                                 <SecondaryDescription>12341001-12341003</SecondaryDescription>
                                                                                                                 <SecondaryDescription>009283546861231231231231231231
                                                                                                                 </SecondaryDescription>
-                                                                                                                <UnitPrice>16.0000</UnitPrice>
-                                                                                                                <TotalPrice>64.0000</TotalPrice>
+                                                                                                                <UnitPrice>20.0000</UnitPrice>
+                                                                                                                <TotalPrice>100.0000</TotalPrice>
                                                                                                 </ITEM>
                                                                                 </INVOICE>
                                                                                 <ShippingOptions />
@@ -63,8 +63,8 @@
                                                                 <ADDRESS>
                                                                                 <Class>DELIVER_TO</Class>
                                                                                 <AddressID>157431137609</AddressID>
-                                                                                <IndividualName>Kim Possible</IndividualName>
-                                                                                <Address1>75 West Road</Address1>
+                                                                                <IndividualName>Venkata Kakani</IndividualName>
+                                                                                <Address1>987 Edge St apt 200</Address1>
                                                                                 <City>Bentonville</City>
                                                                                 <State>AR</State>
                                                                                 <ZIPCode>72712</ZIPCode>
@@ -72,16 +72,13 @@
                                                                 </ADDRESS>
                                                                 <ADDRESS>
                                                                                 <Class>RETURN</Class>
-                                                                                <IndividualName>WALMART.COM</IndividualName>
-                                                                                <Address1>1901 SE 10TH STREET</Address1>
-                                                                                <Address2>1901 SE 10TH STREET</Address2>
-                                                                                <City>BENTONVILLE</City>
+                                                                                <IndividualName>Amazon.COM</IndividualName>
+                                                                                <Address1>2404 S Promenade Blvd</Address1>
+                                                                                <City>Rogers</City>
                                                                                 <State>AR</State>
-                                                                                <ZIPCode>72716</ZIPCode>
+                                                                                <ZIPCode>72758</ZIPCode>
                                                                 </ADDRESS>
-                                                                <INTERNATIONAL_SHIP_UNIT>
-                                                                	<INVOICE>N</INVOICE>                                                                	
-                                                                </INTERNATIONAL_SHIP_UNIT>
+                                                                <INTERNATIONAL_SHIP_UNIT />
                                                                 <UPS_SHIP_UNIT>
                                                                                 <CustomerReferenceType2>PO</CustomerReferenceType2>
                                                                                 <CustomerReference2>157431137609</CustomerReference2>

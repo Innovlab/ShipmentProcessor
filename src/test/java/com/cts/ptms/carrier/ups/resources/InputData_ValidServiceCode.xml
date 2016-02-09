@@ -28,11 +28,11 @@
                                                                                                 <CustomerPONumber>157431137609</CustomerPONumber>
                                                                                 </SHIP_UNIT_CUSTOM>
                                                                                 <INVOICE xmlns="http://ScanData.com/WTM/XMLSchemas/Walmart_1.00.0000.xsd">
-                                                                                                <CustomerOrderNumber>157431137609</CustomerOrderNumber>
+                                                                                                <CustomerOrderNumber>157431137610</CustomerOrderNumber>
                                                                                                 <SalesTax>0.0000</SalesTax>
                                                                                                 <ShippingAndHandling>27.8800</ShippingAndHandling>
                                                                                                 <ShipmentTotal>91.8800</ShipmentTotal>
-                                                                                                <SubTotal>64.0000</SubTotal>
+                                                                                                <SubTotal>118.76</SubTotal>
                                                                                                 <TCNumber>78130151356808848117</TCNumber>
                                                                                                 <WaveNumber>5628</WaveNumber>
                                                                                                 <ITEM>
@@ -63,8 +63,8 @@
                                                                 <ADDRESS>
                                                                                 <Class>DELIVER_TO</Class>
                                                                                 <AddressID>157431137609</AddressID>
-                                                                                <IndividualName>Kim Possible</IndividualName>
-                                                                                <Address1>75 West Road</Address1>
+                                                                                <IndividualName>Venkata Kakani</IndividualName>
+                                                                                <Address1>5432 NE 18th Street</Address1>
                                                                                 <City>Bentonville</City>
                                                                                 <State>AR</State>
                                                                                 <ZIPCode>72712</ZIPCode>
