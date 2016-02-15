@@ -18,6 +18,7 @@ public class ShippingConstants {
     public static final String PDF_FILE_NAME="pdfFileName";
     public static final String INPUTFILE="D:\\inputData.xml";
     public static final String UPS = "UPS";
+    public static final String YRC = "YRC";
     public static final String buildPropertiesPath=".\\main\\resources\\Config\\ups\\Integraiton\\UPS.properties";
     
     // Hard coded strings used in business logic

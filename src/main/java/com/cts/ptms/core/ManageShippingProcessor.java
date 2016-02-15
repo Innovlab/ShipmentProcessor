@@ -37,7 +37,8 @@ public class ManageShippingProcessor {
 	@Produces( MediaType.APPLICATION_JSON )
 	@Consumes({MediaType.MULTIPART_FORM_DATA})
 	public ShipmentResponse importXMLFile(@Context HttpServletRequest request) throws Exception {
-		boolean status = false;
+		boolean genLbl = false;
+		String carrierName="";
 		loadProperties();
 		DiskFileItemFactory fileItemFactory = new DiskFileItemFactory();
 		ServletFileUpload uploadHandler = new ServletFileUpload(
@@ -51,21 +52,29 @@ public class ManageShippingProcessor {
 			FileItem item = (FileItem) itr.next();
 			if (item.getFieldName().equalsIgnoreCase("FILEUPLOAD")) {
 				String ipData = item.getString();
-				status = true;
 				File file = new File(ShippingConstants.INPUTFILE);	
 				if(file.exists()){
 					file.delete();
 				}
 				FileUtils.writeStringToFile(file, ipData);
 			}
+			if(item.getFieldName().equalsIgnoreCase("CARRIER")){
+				carrierName = item.getString();
+			}
+			if(item.getFieldName().equalsIgnoreCase("GENLBL")){
+				if(item.getString().equalsIgnoreCase("true")){
+					genLbl = true;
+				}
+			}
 		}
 		ShipmentServiceImpl impl = new ShipmentServiceImpl();
 		ShipmentRequest shipmentRequest = new ShipmentRequest();
 		shipmentRequest.setFileName(ShippingConstants.INPUTFILE);
-		shipmentRequest.setCarrier("UPS");
+		shipmentRequest.setCarrier(carrierName);
+		shipmentRequest.setGenLabel(genLbl);
 		return impl.createShipment(shipmentRequest);
 	}
-
+	
 	private void loadProperties(){
 		try {
 			InputStream inputStream = this.getClass().getClassLoader().getResourceAsStream(ShippingConstants.buildPropertiesPath);

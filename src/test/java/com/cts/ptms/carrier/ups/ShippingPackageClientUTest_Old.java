@@ -86,7 +86,7 @@ public class ShippingPackageClientUTest_Old {
 		UPSHTTPClient upsHttpClient = new UPSHTTPClient();
 		ShippingInfoDO shippingInfoDO = new ShippingInfoDO();
 		try {
-			upsHttpClient.generateShippingLabel(shippingInfoDO);
+			upsHttpClient.generateShippingLabel(shippingInfoDO, null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

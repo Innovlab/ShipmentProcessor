@@ -1,6 +1,14 @@
 package main.java.com.cts.ptms.carrier.ups;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Locale;
+
+import main.java.com.cts.ptms.model.confirm.request.DiscountType;
+import main.java.com.cts.ptms.model.confirm.request.FreightChargesType;
+import main.java.com.cts.ptms.model.confirm.request.InsuranceChargesType;
+import main.java.com.cts.ptms.model.confirm.request.OtherChargesType;
 
 import main.java.com.cts.ptms.model.ADDRESS;
 import main.java.com.cts.ptms.model.CreateShipUnits;
@@ -12,11 +20,8 @@ import main.java.com.cts.ptms.model.ShipmentAcceptRequestObjectFactory;
 //import main.java.com.cts.ptms.model.ShipmentConfirmRequest.Request.TransactionReference;
 import main.java.com.cts.ptms.model.ShipmentConfirmResponse;
 import main.java.com.cts.ptms.model.confirm.request.CodeType;
-import main.java.com.cts.ptms.model.confirm.request.DiscountType;
-import main.java.com.cts.ptms.model.confirm.request.FreightChargesType;
-import main.java.com.cts.ptms.model.confirm.request.InsuranceChargesType;
 import main.java.com.cts.ptms.model.confirm.request.InternationalFormsType;
-import main.java.com.cts.ptms.model.confirm.request.OtherChargesType;
+import main.java.com.cts.ptms.model.confirm.request.LabelDeliveryEMailMessageType;
 import main.java.com.cts.ptms.model.confirm.request.PackageType;
 import main.java.com.cts.ptms.model.confirm.request.PackageWeightType;
 import main.java.com.cts.ptms.model.confirm.request.PackagingTypeType;
@@ -24,6 +29,8 @@ import main.java.com.cts.ptms.model.confirm.request.ProductType;
 import main.java.com.cts.ptms.model.confirm.request.ProductWeightType;
 import main.java.com.cts.ptms.model.confirm.request.ReferenceNumberType;
 import main.java.com.cts.ptms.model.confirm.request.ShipmentConfirmRequest;
+import main.java.com.cts.ptms.model.confirm.request.ShipmentServiceOptionsNotificationEMailMessageType;
+import main.java.com.cts.ptms.model.confirm.request.ShipmentServiceOptionsNotificationType;
 import main.java.com.cts.ptms.model.confirm.request.SoldToAddressType;
 import main.java.com.cts.ptms.model.confirm.request.SoldToType;
 import main.java.com.cts.ptms.model.confirm.request.TransactionReferenceType;
@@ -32,7 +39,7 @@ import main.java.com.cts.ptms.utils.constants.UPSConstants;
 
 public class UPSMapper {
 	
-	public  ShipmentConfirmRequest populateShipConfirmRequest(CreateShipUnits createShipUnits) {
+	public  ShipmentConfirmRequest populateShipConfirmRequest(CreateShipUnits createShipUnits,boolean isGenlabel) {
 		
 		main.java.com.cts.ptms.model.confirm.request.ObjectFactory requestObjectFactory = new main.java.com.cts.ptms.model.confirm.request.ObjectFactory();
 		ShipmentConfirmRequest shipRequest = requestObjectFactory.createShipmentConfirmRequest();
@@ -72,60 +79,60 @@ public class UPSMapper {
 		SHIPUNIT  shipUnit = createShipUnits.getCreateShipUnitsParams().getCREATESHIPUNITSPARAMS1().getSHIPUNIT();
 		List<ADDRESS> addressList = shipUnit.getADDRESS();
 		for (ADDRESS address : addressList ) {
-			
-			if(address.getClazz().equals(UPSConstants.DELIVER_TO)) {
-				if(null == shipRequest.getShipment().getShipTo()){
-					shipRequest.getShipment().setShipTo(requestObjectFactory.createShipToType());
-				}
-				shipRequest.getShipment().getShipTo().setCompanyName(address.getIndividualName());
-				shipRequest.getShipment().getShipTo().setAttentionName(address.getIndividualName());
-				shipRequest.getShipment().getShipTo().setPhoneNumber("1234567890");
-				if(null == shipRequest.getShipment().getShipTo().getAddress()){
-					shipRequest.getShipment().getShipTo().setAddress(requestObjectFactory.createShipToAddressType());
-				}
-				shipRequest.getShipment().getShipTo().getAddress().setAddressLine1(address.getAddress1());
-				shipRequest.getShipment().getShipTo().getAddress().setCity(address.getCity());
-				shipRequest.getShipment().getShipTo().getAddress().setCountryCode("US");
-				shipRequest.getShipment().getShipTo().getAddress().setStateProvinceCode(address.getState());
-				shipRequest.getShipment().getShipTo().getAddress().setPostalCode(address.getZIPCode().toString());
-				
-				//International Forms
-				
-				
-				SoldToType soldTo = shipRequest.getShipment().getSoldTo();
-				soldTo.setOption("01");
-				soldTo.setAttentionName(address.getIndividualName());
-				soldTo.setCompanyName(address.getIndividualName());
-				soldTo.setPhoneNumber("1234567890");
-				SoldToAddressType soldToAddress =  shipRequest.getShipment().getSoldTo().getAddress();
-				soldToAddress.setAddressLine1(address.getAddress1());
-				soldToAddress.setCity(address.getCity());
-				soldToAddress.setPostalCode(address.getZIPCode().toString());
-				soldToAddress.setCountryCode("DE");
-				soldTo.setAddress(soldToAddress);
-				shipRequest.getShipment().setSoldTo(soldTo);
-				
-				
-			} else if (address.getClazz().equals(UPSConstants.ORDERED_BY)) {
-
-				if(null == shipRequest.getShipment().getShipFrom()){
-					shipRequest.getShipment().setShipFrom(requestObjectFactory.createShipFromType());
-				}
-				shipRequest.getShipment().getShipFrom().setCompanyName(address.getIndividualName());
-				shipRequest.getShipment().getShipFrom().setAttentionName(address.getIndividualName());
-				shipRequest.getShipment().getShipFrom().setPhoneNumber("1234567890");
-				shipRequest.getShipment().getShipFrom().setTaxIdentificationNumber("1234567877");
-				if(null == shipRequest.getShipment().getShipFrom().getAddress()){
-					shipRequest.getShipment().getShipFrom().setAddress(requestObjectFactory.createShipFromAddressType());
-				}
-				shipRequest.getShipment().getShipFrom().getAddress().setAddressLine1(address.getAddress1());
-				shipRequest.getShipment().getShipFrom().getAddress().setCity(address.getCity());
-				shipRequest.getShipment().getShipFrom().getAddress().setCountryCode("US");
-				shipRequest.getShipment().getShipFrom().getAddress().setStateProvinceCode(address.getState());
-				shipRequest.getShipment().getShipFrom().getAddress().setPostalCode(address.getZIPCode().toString());
-				
-				
-			} else if (address.getClazz().equals(UPSConstants.RETURN)) {
+			if(!isGenlabel){
+				if(address.getClazz().equals(UPSConstants.DELIVER_TO)) {
+					if(null == shipRequest.getShipment().getShipTo()){
+						shipRequest.getShipment().setShipTo(requestObjectFactory.createShipToType());
+					}
+					shipRequest.getShipment().getShipTo().setCompanyName(address.getIndividualName());
+					shipRequest.getShipment().getShipTo().setAttentionName(address.getIndividualName());
+					shipRequest.getShipment().getShipTo().setPhoneNumber("1234567890");
+					if(null == shipRequest.getShipment().getShipTo().getAddress()){
+						shipRequest.getShipment().getShipTo().setAddress(requestObjectFactory.createShipToAddressType());
+					}
+					shipRequest.getShipment().getShipTo().getAddress().setAddressLine1(address.getAddress1());
+					shipRequest.getShipment().getShipTo().getAddress().setCity(address.getCity());
+					shipRequest.getShipment().getShipTo().getAddress().setCountryCode("US");
+					shipRequest.getShipment().getShipTo().getAddress().setStateProvinceCode(address.getState());
+					shipRequest.getShipment().getShipTo().getAddress().setPostalCode(address.getZIPCode().toString());
+					
+					//International Forms
+					
+					
+					SoldToType soldTo = shipRequest.getShipment().getSoldTo();
+					soldTo.setOption("01");
+					soldTo.setAttentionName(address.getIndividualName());
+					soldTo.setCompanyName(address.getIndividualName());
+					soldTo.setPhoneNumber("1234567890");
+					SoldToAddressType soldToAddress =  shipRequest.getShipment().getSoldTo().getAddress();
+					soldToAddress.setAddressLine1(address.getAddress1());
+					soldToAddress.setCity(address.getCity());
+					soldToAddress.setPostalCode(address.getZIPCode().toString());
+					soldToAddress.setCountryCode("DE");
+					soldTo.setAddress(soldToAddress);
+					shipRequest.getShipment().setSoldTo(soldTo);
+					
+					
+				} else if (address.getClazz().equals(UPSConstants.ORDERED_BY)) {
+	
+					if(null == shipRequest.getShipment().getShipFrom()){
+						shipRequest.getShipment().setShipFrom(requestObjectFactory.createShipFromType());
+					}
+					shipRequest.getShipment().getShipFrom().setCompanyName(address.getIndividualName());
+					shipRequest.getShipment().getShipFrom().setAttentionName(address.getIndividualName());
+					shipRequest.getShipment().getShipFrom().setPhoneNumber("1234567890");
+					shipRequest.getShipment().getShipFrom().setTaxIdentificationNumber("1234567877");
+					if(null == shipRequest.getShipment().getShipFrom().getAddress()){
+						shipRequest.getShipment().getShipFrom().setAddress(requestObjectFactory.createShipFromAddressType());
+					}
+					shipRequest.getShipment().getShipFrom().getAddress().setAddressLine1(address.getAddress1());
+					shipRequest.getShipment().getShipFrom().getAddress().setCity(address.getCity());
+					shipRequest.getShipment().getShipFrom().getAddress().setCountryCode("US");
+					shipRequest.getShipment().getShipFrom().getAddress().setStateProvinceCode(address.getState());
+					shipRequest.getShipment().getShipFrom().getAddress().setPostalCode(address.getZIPCode().toString());
+					
+					
+				} else if (address.getClazz().equals(UPSConstants.RETURN)) {
 				shipRequest.getShipment().getShipper().setName(address.getIndividualName());
 				shipRequest.getShipment().getShipper().setPhoneNumber("1234567890");
 				shipRequest.getShipment().getShipper().setShipperNumber("1801E0");
@@ -138,10 +145,77 @@ public class UPSMapper {
 				shipRequest.getShipment().getShipper().getAddress().setCountryCode("US");
 				shipRequest.getShipment().getShipper().getAddress().setStateProvinceCode(address.getState());
 				shipRequest.getShipment().getShipper().getAddress().setPostalCode(address.getZIPCode().toString());
-				
+				}
 			}
-		}
+				else{
+					if(address.getClazz().equals(UPSConstants.RETURN)) {
+						if(null == shipRequest.getShipment().getShipTo()){
+							shipRequest.getShipment().setShipTo(requestObjectFactory.createShipToType());
+						}
+						shipRequest.getShipment().getShipTo().setCompanyName(address.getIndividualName());
+						shipRequest.getShipment().getShipTo().setAttentionName(address.getIndividualName());
+						shipRequest.getShipment().getShipTo().setPhoneNumber("1234567890");
+						if(null == shipRequest.getShipment().getShipTo().getAddress()){
+							shipRequest.getShipment().getShipTo().setAddress(requestObjectFactory.createShipToAddressType());
+						}
+						shipRequest.getShipment().getShipTo().getAddress().setAddressLine1(address.getAddress1());
+						shipRequest.getShipment().getShipTo().getAddress().setCity(address.getCity());
+						shipRequest.getShipment().getShipTo().getAddress().setCountryCode("US");
+						shipRequest.getShipment().getShipTo().getAddress().setStateProvinceCode(address.getState());
+						shipRequest.getShipment().getShipTo().getAddress().setPostalCode(address.getZIPCode().toString());
+						
+						//International Forms
+						
+						
+						SoldToType soldTo = shipRequest.getShipment().getSoldTo();
+						soldTo.setOption("01");
+						soldTo.setAttentionName(address.getIndividualName());
+						soldTo.setCompanyName(address.getIndividualName());
+						soldTo.setPhoneNumber("1234567890");
+						SoldToAddressType soldToAddress =  shipRequest.getShipment().getSoldTo().getAddress();
+						soldToAddress.setAddressLine1(address.getAddress1());
+						soldToAddress.setCity(address.getCity());
+						soldToAddress.setPostalCode(address.getZIPCode().toString());
+						soldToAddress.setCountryCode("DE");
+						soldTo.setAddress(soldToAddress);
+						shipRequest.getShipment().setSoldTo(soldTo);
+						
+						
+					} else if (address.getClazz().equals(UPSConstants.DELIVER_TO)) {
 		
+						if(null == shipRequest.getShipment().getShipFrom()){
+							shipRequest.getShipment().setShipFrom(requestObjectFactory.createShipFromType());
+						}
+						shipRequest.getShipment().getShipFrom().setCompanyName(address.getIndividualName());
+						shipRequest.getShipment().getShipFrom().setAttentionName(address.getIndividualName());
+						shipRequest.getShipment().getShipFrom().setPhoneNumber("1234567890");
+						shipRequest.getShipment().getShipFrom().setTaxIdentificationNumber("1234567877");
+						if(null == shipRequest.getShipment().getShipFrom().getAddress()){
+							shipRequest.getShipment().getShipFrom().setAddress(requestObjectFactory.createShipFromAddressType());
+						}
+						shipRequest.getShipment().getShipFrom().getAddress().setAddressLine1(address.getAddress1());
+						shipRequest.getShipment().getShipFrom().getAddress().setCity(address.getCity());
+						shipRequest.getShipment().getShipFrom().getAddress().setCountryCode("US");
+						shipRequest.getShipment().getShipFrom().getAddress().setStateProvinceCode(address.getState());
+						shipRequest.getShipment().getShipFrom().getAddress().setPostalCode(address.getZIPCode().toString());
+						
+						
+					} else if (address.getClazz().equals(UPSConstants.ORDERED_BY)) {
+					shipRequest.getShipment().getShipper().setName(address.getIndividualName());
+					shipRequest.getShipment().getShipper().setPhoneNumber("1234567890");
+					shipRequest.getShipment().getShipper().setShipperNumber("1801E0");
+					shipRequest.getShipment().getShipper().setTaxIdentificationNumber("1234567877");
+					if(null == shipRequest.getShipment().getShipper().getAddress()){
+						shipRequest.getShipment().getShipper().setAddress(requestObjectFactory.createShipperAddressType());
+					}
+					shipRequest.getShipment().getShipper().getAddress().setAddressLine1(address.getAddress1());
+					shipRequest.getShipment().getShipper().getAddress().setCity(address.getCity());
+					shipRequest.getShipment().getShipper().getAddress().setCountryCode("US");
+					shipRequest.getShipment().getShipper().getAddress().setStateProvinceCode(address.getState());
+					shipRequest.getShipment().getShipper().getAddress().setPostalCode(address.getZIPCode().toString());
+					}
+				}
+		}
 		
 		
 		if(null == shipRequest.getShipment().getPaymentInformation()){
@@ -175,6 +249,7 @@ public class UPSMapper {
 		
 		for (int pkgCount=0; pkgCount < shipRequest.getShipment().getPackage().size();pkgCount++ ){
 			shipRequest.getShipment().getService().setCode(serviceCode);
+			shipRequest.getShipment().getPackage().get(pkgCount).setDescription("Test");
 			shipRequest.getShipment().getPackage().get(pkgCount).getPackagingType().setCode("02");
 			shipRequest.getShipment().getPackage().get(pkgCount).getReferenceNumber().get(0).setCode("00");
 			shipRequest.getShipment().getPackage().get(pkgCount).getReferenceNumber().get(0).setValue("Package");
@@ -183,39 +258,37 @@ public class UPSMapper {
 	
 		
 		//International Forms
-		INVOICE invoice = shipUnit.getDataXML().getINVOICE();
-		
 		InternationalFormsType internationalForms = shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms();
 		List<String> formTypeList = internationalForms.getFormType();
 
 		//Commercial Invoice
 		formTypeList.add("01");
-		
+
 		// Add Product 
 		List<ProductType> productList = internationalForms.getProduct();
 		ProductType product = new ProductType();
 		List<String> descriptionList = product.getDescription();
-		descriptionList.add(invoice.getITEM().getDescription());
-		product.setCommodityCode(invoice.getITEM().getItemNumber().toString());
+		descriptionList.add("Product 1");
+		product.setCommodityCode("123COM");
 		product.setOriginCountryCode("US");
 		UnitType unit = new UnitType();
-		unit.setNumber(invoice.getITEM().getQuantity().toString());
-		unit.setValue(invoice.getITEM().getUnitPrice().toString());
+		unit.setNumber("147");
+		unit.setValue("478");
 		CodeType uom = new CodeType();
 		uom.setCode("BOX");
-		uom.setDescription("");
+		uom.setDescription("BOX");
 		unit.setUnitOfMeasurement(uom);
 		product.setUnit(unit);
 		ProductWeightType productWeight = new ProductWeightType();
-		productWeight.setWeight(shipUnit.getWeight().toString());
+		productWeight.setWeight("10");
 		CodeType uomForWeight = new CodeType();
 		uomForWeight.setCode("LBS");
-		uomForWeight.setDescription("Pounds");
+		uomForWeight.setDescription("LBS");
 		productWeight.setUnitOfMeasurement(uomForWeight);
 		product.setProductWeight(productWeight);
 		productList.add(product);
 		
-		//INVOICE invoice = shipUnit.getDataXML().getINVOICE();
+		INVOICE invoice = shipUnit.getDataXML().getINVOICE();
 		//LocalDateTime.parse(shipUnit.getDatePlannedShipment(), DateTimeFormatter.ofPattern("yyyyMMdd").withLocale(Locale.ENGLISH));
 		internationalForms.setInvoiceNumber(invoice.getCustomerOrderNumber().toString());
 		//internationalForms.setInvoiceDate(LocalDateTime.parse(shipUnit.getDatePlannedShipment(), DateTimeFormatter.ofPattern("yyyyMMdd").withLocale(Locale.ENGLISH)).toString());
@@ -243,7 +316,17 @@ public class UPSMapper {
 		internationalForms.setCurrencyCode("USD");
 		
 		shipRequest.getShipment().getShipmentServiceOptions().setInternationalForms(internationalForms);
-
+		if(isGenlabel){
+			if(null == shipRequest.getShipment().getReturnService()){
+				shipRequest.getShipment().setReturnService(requestObjectFactory.createReturnServiceType());
+			}
+			shipRequest.getShipment().getReturnService().setCode("9");
+		}
+//		shipRequest.getShipment().setShipmentServiceOptions(requestObjectFactory.createShipmentServiceOptionsType());
+//		LabelDeliveryEMailMessageType deliveryEMailMessageType = new LabelDeliveryEMailMessageType();
+//		shipRequest.getShipment().getShipmentServiceOptions().setLabelDelivery(requestObjectFactory.createLabelDeliveryType());
+//		shipRequest.getShipment().getShipmentServiceOptions().getLabelDelivery().setEMailMessage(requestObjectFactory.createLabelDeliveryEMailMessageType());
+//		shipRequest.getShipment().getShipmentServiceOptions().getLabelDelivery().getEMailMessage().setEMailAddress("ragavendran.s2@cognizant.com");
 		
 		return shipRequest;
 	}

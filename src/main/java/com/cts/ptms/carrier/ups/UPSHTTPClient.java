@@ -25,6 +25,8 @@ import javax.xml.bind.Unmarshaller;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.BarcodeEAN;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import main.java.com.cts.ptms.core.ClientGateway;
@@ -54,10 +56,14 @@ public class UPSHTTPClient implements ClientGateway {
 		// TODO Auto-generated method stub
 		
 	}
-
+	public String trackingNum="";
+	public boolean genReturnLabel=false;
 	public ShipmentResponse createShipmentRequest(ShipmentRequest request) {
 		ShipmentConfirmRequest shipConfRequest = new ShipmentConfirmRequest();
+		ShipmentConfirmRequest returnConfRequest = new ShipmentConfirmRequest();
 		ShippingInfoDO infoDO = new ShippingInfoDO();
+		ShippingInfoDO returninfoDO = new ShippingInfoDO();
+		
 		try 
 		{
 			loadProperties();
@@ -66,16 +72,32 @@ public class UPSHTTPClient implements ClientGateway {
 			Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
 			CreateShipUnits createShipUnits = (CreateShipUnits) jaxbUnmarshaller.unmarshal(file);
 			UPSMapper upsMapper =  new UPSMapper();
-			shipConfRequest = upsMapper.populateShipConfirmRequest(createShipUnits);
+			shipConfRequest = upsMapper.populateShipConfirmRequest(createShipUnits,false);
+			if(request.isGenLabel()){
+				returnConfRequest = upsMapper.populateShipConfirmRequest(createShipUnits,true);
+			}
 		} 
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		infoDO.setConfirmRequest(shipConfRequest);
-		infoDO.setUpsSecurity(populateAccessRequest());
 		try {
-			return generateShippingLabel(infoDO);
+			genReturnLabel = false;
+			if(!request.isGenLabel()){
+				infoDO.setUpsSecurity(populateAccessRequest());
+				infoDO.setConfirmRequest(shipConfRequest);
+				return generateShippingLabel(infoDO,request);
+			}
+			else{
+				infoDO.setUpsSecurity(populateAccessRequest());
+				infoDO.setConfirmRequest(shipConfRequest);
+				generateShippingLabel(infoDO,request);
+				genReturnLabel = true;
+				returninfoDO.setUpsSecurity(populateAccessRequest());
+				returninfoDO.setConfirmRequest(returnConfRequest);
+				return generateShippingLabel(returninfoDO,request);
+			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,7 +119,11 @@ public class UPSHTTPClient implements ClientGateway {
 		}
 		if(null!= acceptResponse){
 			response.setStatus(acceptResponse.getResponse().getResponseStatusDescription());
+			if(trackingNum!=""){
+				response.setTrackingNumber(trackingNum);
+			}else{
 			response.setTrackingNumber(acceptResponse.getShipmentResults().getShipmentIdentificationNumber());
+			}
 			//for Label
 			if(null!=acceptResponse.getShipmentResults() && null!=acceptResponse.getShipmentResults().getPackageResults() &&
 					null!=acceptResponse.getShipmentResults().getPackageResults().get(0).getLabelImage()){
@@ -126,7 +152,7 @@ public class UPSHTTPClient implements ClientGateway {
 	/**
 	 * This method triggers the shipping label generation process
 	 */
-	public ShipmentResponse generateShippingLabel(ShippingInfoDO shippingInfoDO) throws Exception{
+	public ShipmentResponse generateShippingLabel(ShippingInfoDO shippingInfoDO,ShipmentRequest request) throws Exception{
 		
 		//Load the properties file 
 		loadProperties();
@@ -192,14 +218,14 @@ public class UPSHTTPClient implements ClientGateway {
 			if(!shipAcceptResponse.getResponse().getResponseStatusDescription().equalsIgnoreCase("FAILURE")){
 				String imageSrc = shipAcceptResponse.getShipmentResults().getPackageResults().get(0).getLabelImage().getGraphicImage();
 				byte[] decoded = Base64.getDecoder().decode(imageSrc);
-				generateShippingLabelPDF(decoded,shipAcceptResponse.getShipmentResults().getShipmentIdentificationNumber());
-				
-				String formInfo = shipAcceptResponse.getShipmentResults().getForm().getImage().getGraphicImage();
-				String formExtn = shipAcceptResponse.getShipmentResults().getForm().getImage().getImageFormat().getCode();
-				String formDocType =  shipAcceptResponse.getShipmentResults().getForm().getClass().getSimpleName();
-				byte[] intlForms =  Base64.getDecoder().decode(formInfo);
-				generateShippingForms(intlForms,shipAcceptResponse.getShipmentResults().getShipmentIdentificationNumber(),formDocType,formExtn);
-				
+				generateShippingLabelPDF(decoded,shipAcceptResponse.getShipmentResults().getShipmentIdentificationNumber(),shippingInfoDO,request);
+				if(null!=shipAcceptResponse.getShipmentResults().getForm()){
+					String formInfo = shipAcceptResponse.getShipmentResults().getForm().getImage().getGraphicImage();
+					String formExtn = shipAcceptResponse.getShipmentResults().getForm().getImage().getImageFormat().getCode();
+					String formDocType =  shipAcceptResponse.getShipmentResults().getForm().getClass().getSimpleName();
+					byte[] intlForms =  Base64.getDecoder().decode(formInfo);
+					generateShippingForms(intlForms,shipAcceptResponse.getShipmentResults().getShipmentIdentificationNumber(),formDocType,formExtn);
+				}
 				return createShipmentResposeObj(null,shipAcceptResponse);
 			}
 			else{
@@ -334,7 +360,7 @@ public class UPSHTTPClient implements ClientGateway {
 	/**
 	 * This method Generate the shipping label as a PDF file
 	 */
-	private String generateShippingLabelPDF(byte[] decoded,String trackingNumber)
+	private String generateShippingLabelPDF(byte[] decoded,String trackingNumber,ShippingInfoDO shippingInfoDO,ShipmentRequest request)
 			throws MalformedURLException, IOException, DocumentException {
 		Document document = new Document();
 		PdfWriter writer;
@@ -344,6 +370,15 @@ public class UPSHTTPClient implements ClientGateway {
 					+ trackingNumber+ShippingConstants.PDF_fILE;
 			String path = new UPSHTTPClient().getClass().getClassLoader().getResource("").getPath()
 					+ trackingNumber+ShippingConstants.PNG_FILE;
+			if(genReturnLabel){
+				filename = new UPSHTTPClient().getClass().getClassLoader().getResource("").getPath()
+						+"Return_"+ trackingNum+ShippingConstants.PDF_fILE;
+				path = new UPSHTTPClient().getClass().getClassLoader().getResource("").getPath()
+						+"Return_"+ trackingNum+ShippingConstants.PNG_FILE;
+			}
+			else{
+				trackingNum = trackingNumber;
+			}
 			filename = filename.replace(ShippingConstants.FILE_PATH, "");
 			path = path.replace(ShippingConstants.FILE_PATH, ShippingConstants.File_Path_Replace);
 			OutputStream out1 = null;
@@ -356,15 +391,13 @@ public class UPSHTTPClient implements ClientGateway {
 					out1.close();
 				}
 			}
-
 			File pdfFile = new File(filename);
 			writer = PdfWriter.getInstance(document, new FileOutputStream(pdfFile));
 			document.open();
-			Image barcode = Image.getInstance(decoded);
-			barcode.setBorder(50);
-			barcode.scalePercent(40, 60);
-			document.add(barcode);
-
+				Image barcode = Image.getInstance(decoded);
+				barcode.setBorder(50);
+				barcode.scalePercent(40, 60);
+				document.add(barcode);
 			document.close();
 			writer.close();
 			URL = filename;

@@ -16,6 +16,9 @@ public class ShipmentServiceImpl implements ShipmentService {
 		if(carrier== ShippingConstants.UPS){
 			clientShipmentService =  new UPSShipmentService(shipmentRequest);
 		}
+		if(carrier== ShippingConstants.YRC){
+			clientShipmentService =  new UPSShipmentService(shipmentRequest);
+		}
 		ShipmentResponse shipmentResponse =  clientShipmentService.createShipment(shipmentRequest);
 		return shipmentResponse;
 		
@@ -27,8 +30,11 @@ public class ShipmentServiceImpl implements ShipmentService {
 		//HashMap carrierIdentifierMap = new HashMap<String,String>();
 		String carrierName = shipmentRequest.getCarrier();
 		
-		if(shipmentRequest.getCarrier() == ShippingConstants.UPS){
+		if(shipmentRequest.getCarrier().toString().equalsIgnoreCase(ShippingConstants.UPS)){
 			return ShippingConstants.UPS;
+		}
+		if(shipmentRequest.getCarrier().toString().equalsIgnoreCase(ShippingConstants.YRC)){
+			return ShippingConstants.YRC;
 		}
 		return null;
 		

@@ -6,6 +6,8 @@ public class ShipmentRequest {
 	
 	private String carrier;
 	
+	private boolean genLabel;
+	
 	public String getCarrier() {
 		return carrier;
 	}
@@ -17,6 +19,12 @@ public class ShipmentRequest {
 	}
 	public void setFileName(String fileName) {
 		this.fileName = fileName;
+	}
+	public boolean isGenLabel() {
+		return genLabel;
+	}
+	public void setGenLabel(boolean genLabel) {
+		this.genLabel = genLabel;
 	}
 	
 }
