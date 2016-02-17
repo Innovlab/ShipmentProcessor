@@ -54,16 +54,7 @@ public class UPSMapper {
 			shipRequest.getLabelSpecification().setLabelImageFormat(requestObjectFactory.createLabelImageFormatCodeDescriptionType());
 			shipRequest.getLabelSpecification().setLabelPrintMethod(requestObjectFactory.createLabelPrintMethodCodeDescriptionType());
 			
-			//International Forms
-			shipRequest.getShipment().setShipmentServiceOptions(requestObjectFactory.createShipmentServiceOptionsType());
-			shipRequest.getShipment().getShipmentServiceOptions().setInternationalForms(requestObjectFactory.createInternationalFormsType());
-			shipRequest.getShipment().setSoldTo(requestObjectFactory.createSoldToType());
-			shipRequest.getShipment().getSoldTo().setAddress(requestObjectFactory.createSoldToAddressType());
-			
-			shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms().setDiscount(requestObjectFactory.createDiscountType());
-			shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms().setFreightCharges(requestObjectFactory.createFreightChargesType());
-			shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms().setInsuranceCharges(requestObjectFactory.createInsuranceChargesType());
-			shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms().setOtherCharges(requestObjectFactory.createOtherChargesType());
+
 		}
 		shipRequest.getRequest().setRequestAction(UPSConstants.REQUEST_TYPE);
 		shipRequest.getRequest().setRequestOption(UPSConstants.VALIDATION_MODE);
@@ -78,6 +69,7 @@ public class UPSMapper {
 		}
 		SHIPUNIT  shipUnit = createShipUnits.getCreateShipUnitsParams().getCREATESHIPUNITSPARAMS1().getSHIPUNIT();
 		List<ADDRESS> addressList = shipUnit.getADDRESS();
+		ADDRESS toAddress =null;
 		for (ADDRESS address : addressList ) {
 			if(!isGenlabel){
 				if(address.getClazz().equals(UPSConstants.DELIVER_TO)) {
@@ -92,26 +84,12 @@ public class UPSMapper {
 					}
 					shipRequest.getShipment().getShipTo().getAddress().setAddressLine1(address.getAddress1());
 					shipRequest.getShipment().getShipTo().getAddress().setCity(address.getCity());
-					shipRequest.getShipment().getShipTo().getAddress().setCountryCode("US");
+					shipRequest.getShipment().getShipTo().getAddress().setCountryCode(address.getCountry());
 					shipRequest.getShipment().getShipTo().getAddress().setStateProvinceCode(address.getState());
 					shipRequest.getShipment().getShipTo().getAddress().setPostalCode(address.getZIPCode().toString());
+					toAddress = address;
 					
-					//International Forms
-					
-					
-					SoldToType soldTo = shipRequest.getShipment().getSoldTo();
-					soldTo.setOption("01");
-					soldTo.setAttentionName(address.getIndividualName());
-					soldTo.setCompanyName(address.getIndividualName());
-					soldTo.setPhoneNumber("1234567890");
-					SoldToAddressType soldToAddress =  shipRequest.getShipment().getSoldTo().getAddress();
-					soldToAddress.setAddressLine1(address.getAddress1());
-					soldToAddress.setCity(address.getCity());
-					soldToAddress.setPostalCode(address.getZIPCode().toString());
-					soldToAddress.setCountryCode("DE");
-					soldTo.setAddress(soldToAddress);
-					shipRequest.getShipment().setSoldTo(soldTo);
-					
+
 					
 				} else if (address.getClazz().equals(UPSConstants.ORDERED_BY)) {
 	
@@ -164,24 +142,26 @@ public class UPSMapper {
 						shipRequest.getShipment().getShipTo().getAddress().setStateProvinceCode(address.getState());
 						shipRequest.getShipment().getShipTo().getAddress().setPostalCode(address.getZIPCode().toString());
 						
-						//International Forms
-						
-						
-						SoldToType soldTo = shipRequest.getShipment().getSoldTo();
-						soldTo.setOption("01");
-						soldTo.setAttentionName(address.getIndividualName());
-						soldTo.setCompanyName(address.getIndividualName());
-						soldTo.setPhoneNumber("1234567890");
-						SoldToAddressType soldToAddress =  shipRequest.getShipment().getSoldTo().getAddress();
-						soldToAddress.setAddressLine1(address.getAddress1());
-						soldToAddress.setCity(address.getCity());
-						soldToAddress.setPostalCode(address.getZIPCode().toString());
-						soldToAddress.setCountryCode("DE");
-						soldTo.setAddress(soldToAddress);
-						shipRequest.getShipment().setSoldTo(soldTo);
+//						//International Forms
+//						if (genForms(address)){
+//						
+//						SoldToType soldTo = shipRequest.getShipment().getSoldTo();
+//						soldTo.setOption("01");
+//						soldTo.setAttentionName(address.getIndividualName());
+//						soldTo.setCompanyName(address.getIndividualName());
+//						soldTo.setPhoneNumber("1234567890");
+//						SoldToAddressType soldToAddress =  shipRequest.getShipment().getSoldTo().getAddress();
+//						soldToAddress.setAddressLine1(address.getAddress1());
+//						soldToAddress.setCity(address.getCity());
+//						soldToAddress.setPostalCode(address.getZIPCode().toString());
+//						soldToAddress.setCountryCode("DE");
+//						soldTo.setAddress(soldToAddress);
+//						shipRequest.getShipment().setSoldTo(soldTo);
+//						}
 						
 						
 					} else if (address.getClazz().equals(UPSConstants.DELIVER_TO)) {
+						
 		
 						if(null == shipRequest.getShipment().getShipFrom()){
 							shipRequest.getShipment().setShipFrom(requestObjectFactory.createShipFromType());
@@ -195,16 +175,18 @@ public class UPSMapper {
 						}
 						shipRequest.getShipment().getShipFrom().getAddress().setAddressLine1(address.getAddress1());
 						shipRequest.getShipment().getShipFrom().getAddress().setCity(address.getCity());
-						shipRequest.getShipment().getShipFrom().getAddress().setCountryCode("US");
+						shipRequest.getShipment().getShipFrom().getAddress().setCountryCode(address.getCountry());
 						shipRequest.getShipment().getShipFrom().getAddress().setStateProvinceCode(address.getState());
 						shipRequest.getShipment().getShipFrom().getAddress().setPostalCode(address.getZIPCode().toString());
 						
 						
 					} else if (address.getClazz().equals(UPSConstants.ORDERED_BY)) {
 					shipRequest.getShipment().getShipper().setName(address.getIndividualName());
+					shipRequest.getShipment().getShipper().setAttentionName(address.getIndividualName());
 					shipRequest.getShipment().getShipper().setPhoneNumber("1234567890");
 					shipRequest.getShipment().getShipper().setShipperNumber("1801E0");
 					shipRequest.getShipment().getShipper().setTaxIdentificationNumber("1234567877");
+					
 					if(null == shipRequest.getShipment().getShipper().getAddress()){
 						shipRequest.getShipment().getShipper().setAddress(requestObjectFactory.createShipperAddressType());
 					}
@@ -234,29 +216,64 @@ public class UPSMapper {
 			firstPackage.setPackagingType(pkgingType);
 			shipRequest.getShipment().getPackage().add(firstPackage);
 			
-			ReferenceNumberType refNo = new ReferenceNumberType();
-			shipRequest.getShipment().getPackage().get(0).getReferenceNumber().add(refNo);
+			//ReferenceNumberType refNo = new ReferenceNumberType();
+			//shipRequest.getShipment().getPackage().get(0).getReferenceNumber().add(refNo);
 			
 			PackageWeightType weight = new PackageWeightType();
 			shipRequest.getShipment().getPackage().get(0).setPackageWeight(weight);
 			
-	;
+	
 		}
 		String serviceCode = shipUnit.getShipVia().toString();
 		if(serviceCode.length() == 1){
 			serviceCode = "0"+serviceCode;
 		}
 		
+		shipRequest.getShipment().setDescription("Shipment Description");
+		
 		for (int pkgCount=0; pkgCount < shipRequest.getShipment().getPackage().size();pkgCount++ ){
 			shipRequest.getShipment().getService().setCode(serviceCode);
 			shipRequest.getShipment().getPackage().get(pkgCount).setDescription("Test");
 			shipRequest.getShipment().getPackage().get(pkgCount).getPackagingType().setCode("02");
-			shipRequest.getShipment().getPackage().get(pkgCount).getReferenceNumber().get(0).setCode("00");
-			shipRequest.getShipment().getPackage().get(pkgCount).getReferenceNumber().get(0).setValue("Package");
+//			shipRequest.getShipment().getPackage().get(pkgCount).getReferenceNumber().get(0).setCode("00");
+//			shipRequest.getShipment().getPackage().get(pkgCount).getReferenceNumber().get(0).setValue("Package");
 			shipRequest.getShipment().getPackage().get(pkgCount).getPackageWeight().setWeight(shipUnit.getWeight().toString());
 		}
+		//International Forms
+		if (null != toAddress && genForms(toAddress) && !isGenlabel){
+			
+			
+			
+			shipRequest.getShipment().setShipmentServiceOptions(requestObjectFactory.createShipmentServiceOptionsType());
+			shipRequest.getShipment().getShipmentServiceOptions().setInternationalForms(requestObjectFactory.createInternationalFormsType());
+			shipRequest.getShipment().setSoldTo(requestObjectFactory.createSoldToType());
+			shipRequest.getShipment().getSoldTo().setAddress(requestObjectFactory.createSoldToAddressType());
+			
+			shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms().setDiscount(requestObjectFactory.createDiscountType());
+			shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms().setFreightCharges(requestObjectFactory.createFreightChargesType());
+			shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms().setInsuranceCharges(requestObjectFactory.createInsuranceChargesType());
+			shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms().setOtherCharges(requestObjectFactory.createOtherChargesType());
+			
+			shipRequest.getShipment().setDescription("International Shipment");
+			shipRequest.getShipment().getShipper().setAttentionName("Walmart");
+			
+			//International Forms
+			
 	
-		
+			SoldToType soldTo = shipRequest.getShipment().getSoldTo();
+			soldTo.setOption("01");
+			soldTo.setAttentionName(toAddress.getIndividualName());
+			soldTo.setCompanyName(toAddress.getIndividualName());
+			soldTo.setPhoneNumber("1234567890");
+			SoldToAddressType soldToAddress =  shipRequest.getShipment().getSoldTo().getAddress();
+			soldToAddress.setAddressLine1(toAddress.getAddress1());
+			soldToAddress.setCity(toAddress.getCity());
+			soldToAddress.setPostalCode(toAddress.getZIPCode().toString());
+			soldToAddress.setCountryCode(toAddress.getCountry());
+			soldTo.setAddress(soldToAddress);
+			shipRequest.getShipment().setSoldTo(soldTo);
+
+			
 		//International Forms
 		InternationalFormsType internationalForms = shipRequest.getShipment().getShipmentServiceOptions().getInternationalForms();
 		List<String> formTypeList = internationalForms.getFormType();
@@ -315,7 +332,9 @@ public class UPSMapper {
 		internationalForms.setOtherCharges(otherCharges);
 		internationalForms.setCurrencyCode("USD");
 		
+		
 		shipRequest.getShipment().getShipmentServiceOptions().setInternationalForms(internationalForms);
+		}
 		if(isGenlabel){
 			if(null == shipRequest.getShipment().getReturnService()){
 				shipRequest.getShipment().setReturnService(requestObjectFactory.createReturnServiceType());
@@ -346,6 +365,15 @@ public class UPSMapper {
 		return shipAccept;
 	}
 	
+	
+	private boolean genForms(ADDRESS address){
+		if ((address.getCountry().equalsIgnoreCase("US") && (address.getState().equalsIgnoreCase("PR") ||address.getState().equalsIgnoreCase("VI"))) ||
+				(!address.getCountry().equalsIgnoreCase("US"))){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
 
 }
