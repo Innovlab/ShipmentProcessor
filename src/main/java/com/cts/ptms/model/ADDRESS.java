@@ -61,6 +61,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
     "address4",
     "city",
     "state",
+    "country",
     "zipCode",
     "phoneNumber"
 })
@@ -95,8 +96,21 @@ public class ADDRESS {
     protected BigInteger zipCode;
     @XmlElement(name = "PhoneNumber")
     protected BigInteger phoneNumber;
+    
+    @XmlElement(name = "Country" , required = true)
+    @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
+    @XmlSchemaType(name = "NCName")
+    protected String country;
 
-    /**
+    public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	/**
      * Gets the value of the clazz property.
      * 
      * @return
