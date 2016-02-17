@@ -327,9 +327,11 @@ public class UPSTracking implements ITrackingDetails{
 					PackageServiceOptions packageSerOptions = new PackageServiceOptions();
 					if (receivedPackSerOptions != null) {
 						com.cts.ptms.model.ups.generated.trackresponse.CodeDescriptionType rcvdCdDesc =  receivedPackSerOptions.getSignatureRequired();
-						codeDesc.setCode(rcvdCdDesc.getCode());
-						codeDesc.setDescription(rcvdCdDesc.getDescription());
-						packageSerOptions.setSignatureRequired(codeDesc);
+						if ( rcvdCdDesc != null ) {
+							codeDesc.setCode(rcvdCdDesc.getCode());
+							codeDesc.setDescription(rcvdCdDesc.getDescription());
+							packageSerOptions.setSignatureRequired(codeDesc);
+						}
 					}
 					tempPackage.setPackageServiceOptions(packageSerOptions);
 					
@@ -372,21 +374,26 @@ public class UPSTracking implements ITrackingDetails{
 						Status status = new Status();
 						
 						com.cts.ptms.model.ups.generated.trackresponse.CodeType recCdType =  rcvdStatus.getStatusType();
-						if(recCdType == null) {
-							new TrackingException("No Status type Details available.");
+						if(recCdType != null) {
+							CodeType tempCodeType = new CodeType();
+							tempCodeType.setCode(recCdType.getCode());
+							tempCodeType.setDescription(recCdType.getDescription());
+							status.setStatusType(tempCodeType);
+						} 
+						else 
+						{
+							System.out.println("No Status type Details available.");
 						}
-						CodeType tempCodeType = new CodeType();
-						tempCodeType.setCode(recCdType.getCode());
-						tempCodeType.setDescription(recCdType.getDescription());
-						status.setStatusType(tempCodeType);
+						
 						
 						com.cts.ptms.model.ups.generated.trackresponse.CodeNoDescriptionType recCdNoDescType =  rcvdStatus.getStatusCode();
-						if(recCdNoDescType == null) {
-							new TrackingException("No Status code Details available.");
+						if(recCdNoDescType != null) {
+							CodeNoDescription tempCodeNoDescType = new CodeNoDescription();
+							tempCodeNoDescType.setCode(recCdNoDescType.getCode());
+							status.setStatusCode(tempCodeNoDescType);
+						} else {
+							System.out.println("No Status code Details available.");
 						}
-						CodeNoDescription tempCodeNoDescType = new CodeNoDescription();
-						tempCodeNoDescType.setCode(recCdNoDescType.getCode());
-						status.setStatusCode(tempCodeNoDescType);
 						activity.setStatus(status);
 						activity.setDate(rcvdActivity.getDate());
 						activity.setTime(rcvdActivity.getTime());
@@ -405,11 +412,11 @@ public class UPSTracking implements ITrackingDetails{
 		}
 		catch (TrackingException e)
 		{
-			System.out.println("Exception occured:"+e.getMessage());
+			System.out.println("Exception occured while populating the response:"+e.getMessage());
 		}
 		catch (Exception e)
 		{
-			System.out.println("Exception occured:"+e.getMessage());
+			System.out.println("Exception occured while populating the response:"+e.getMessage());
 		}
 		return customTrackRes;
 	}
