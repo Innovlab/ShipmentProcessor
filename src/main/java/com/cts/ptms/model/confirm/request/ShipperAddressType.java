@@ -49,8 +49,8 @@ import javax.xml.bind.annotation.XmlType;
     "postalCode",
     "countryCode"
 })
-public class ShipperAddressType {
 
+public class ShipperAddressType {
     @XmlElement(name = "AddressLine1", required = true)
     protected String addressLine1;
     @XmlElement(name = "AddressLine2")
