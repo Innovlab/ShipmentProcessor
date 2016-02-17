@@ -50,7 +50,6 @@ public class ManageTrackingResource {
 			ITrackingService trackingService = new TrackingServiceImpl();
 			customTrackingResponse = 
 					trackingService.getShipmentTrackingDetails(customTrackingRequest);
-			System.out.println(customTrackingResponse);
 		} 
 		catch (TrackingException e)
 		{
@@ -60,6 +59,13 @@ public class ManageTrackingResource {
 		return customTrackingResponse;
 	}
 	
+	/**
+	 * This method is used for temporary purpose.
+	 * 
+	 * @param trackingNum
+	 * @param carrierName
+	 * @return
+	 */
 	
 	@GET	
 	@Path("/trackingdetails")
@@ -88,7 +94,8 @@ public class ManageTrackingResource {
 			
 			TrackRequestDetails trackRequestDetails = new TrackRequestDetails();
 			trackRequestDetails.setRequestAction("Track");
-			trackRequestDetails.getRequestOptions().add("7");
+			//0- Last Activity 1-All Activity
+			trackRequestDetails.getRequestOptions().add("2");
 			trackRequestDetails.setTrackingNumber(trackingNum);
 			customTrackingRequest.setTrackRequestDetails(trackRequestDetails);
 			

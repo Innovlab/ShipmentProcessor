@@ -21,7 +21,7 @@ public class Shipment {
     private List<ShipmentReferenceNumber> referenceNumber;
     private CurrentStatus currentStatus;
     private String pickupDate;
-    private List<ShipmentActivity> activity;
+    //private List<ShipmentActivity> activity;
     private String scheduledDeliveryDate;
     private String scheduledDeliveryTime;
     private DeliveryDateUnavailable deliveryDateUnavailable;
@@ -122,18 +122,7 @@ public class Shipment {
 	public void setPickupDate(String pickupDate) {
 		this.pickupDate = pickupDate;
 	}
-	/**
-	 * @return the activity
-	 */
-	public List<ShipmentActivity> getActivity() {
-		return activity;
-	}
-	/**
-	 * @param activity the activity to set
-	 */
-	public void setActivity(List<ShipmentActivity> activity) {
-		this.activity = activity;
-	}
+	
 	/**
 	 * @return the scheduledDeliveryDate
 	 */
@@ -182,20 +171,14 @@ public class Shipment {
 	public void set_package(List<Package> _package) {
 		this._package = _package;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		return "Shipment [shipmentIdentificationNumber=" + shipmentIdentificationNumber + ", shipper=" + shipper
 				+ ", shipTo=" + shipTo + ", shipmentWeight=" + shipmentWeight + ", service=" + service
 				+ ", referenceNumber=" + referenceNumber + ", currentStatus=" + currentStatus + ", pickupDate="
-				+ pickupDate + ", activity=" + activity + ", scheduledDeliveryDate=" + scheduledDeliveryDate
-				+ ", scheduledDeliveryTime=" + scheduledDeliveryTime + ", deliveryDateUnavailable="
-				+ deliveryDateUnavailable + ", _package=" + _package + "]";
+				+ pickupDate + ", scheduledDeliveryDate=" + scheduledDeliveryDate + ", scheduledDeliveryTime="
+				+ scheduledDeliveryTime + ", deliveryDateUnavailable=" + deliveryDateUnavailable + ", _package="
+				+ _package + "]";
 	}
-    
-    
-
 
 }
